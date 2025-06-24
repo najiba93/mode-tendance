@@ -11,6 +11,7 @@ COPY . /var/www/html
 
 # Va dans le dossier du projet
 WORKDIR /var/www/html
+RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
 # Installe Composer
 RUN curl -sS https://getcomposer.org/installer | php \
