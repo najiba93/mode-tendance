@@ -1,26 +1,51 @@
-# Utilise une image PHP avec Apache
-FROM php:8.2-apache
+FROM php:8.3-apache
 
-# Installe les extensions nécessaires
+# Installer les dépendances système et les extensions PHP
 RUN apt-get update && apt-get install -y \
-    git unzip libicu-dev libpq-dev zlib1g-dev libzip-dev \
-    && docker-php-ext-install intl pdo pdo_pgsql zip
+    git \
+    unzip \
+    libzip-dev \
+    && docker-php-ext-install zip pdo_mysql \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copie le code source
+# Installer Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Créer un utilisateur non-root
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+RUN groupadd -g ${GROUP_ID} appuser && \
+    useradd -u ${USER_ID} -g appuser -m -s /bin/bash appuser
+
+# Définir le répertoire de travail
+WORKDIR /var/www/html
+
+# Copier les fichiers de l'application
 COPY . /var/www/html
 
-# Va dans le dossier du projet
-WORKDIR /var/www/html
-RUN curl -sS https://get.symfony.com/cli/installer | bash && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
+# Créer les répertoires de cache et de log si nécessaire et définir les permissions
+RUN mkdir -p /var/www/html/var/cache /var/www/html/var/log && \
+    chown -R appuser:appuser /var/www/html && \
+    chmod -R 775 /var/www/html/var/cache /var/www/html/var/log
 
-# Installe Composer
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+# Passer à l'utilisateur non-root
+USER appuser
 
-# Installe les dépendances Symfony
-RUN composer install --no-dev --optimize-autoloader --no-scripts
+# Autoriser Composer à exécuter en tant que superutilisateur (solution temporaire)
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
+# Installer les dépendances Symfony
+RUN composer install --no-dev --optimize-autoloader
 
-# Active le serveur Apache pour Symfony
+# Repasser à root pour Apache
+USER root
+
+# Activer le module de réécriture pour Symfony
+RUN a2enmod rewrite
+
+# Exposer le port 80
 EXPOSE 80
-CMD ["php", "-S", "0.0.0.0:80", "-t", "public"]
+
+# Démarrer Apache
+CMD ["apache2-foreground"]
