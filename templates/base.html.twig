@@ -1,0 +1,26 @@
+{# templates/base.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mode & Tendance{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+                <li><a href="{{ path('product') }}">Produits</a></li>
+                <li><a href="{{ path('category') }}">Catégories</a></li>
+                <li><a href="{{ path('cart') }}">Panier</a></li>
+                <li><a href="{{ path('contact') }}">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block body %}{% endblock %}
+    </main>
+</body>
+</html>
