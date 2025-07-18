@@ -1,0 +1,24 @@
+body {
+  
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+
+
+/* Le main prend tout l’espace disponible */
+main {
+  flex: 1;
+}
+
+/* Le footer reste en bas */
+footer {
+  background-color: rgba(238, 224, 224, 1);
+   color:black;
+  text-align: center;
+    padding: 10px 0;
+  
+ 
+}

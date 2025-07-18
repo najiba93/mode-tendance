@@ -1,0 +1,81 @@
+{# 🧱 On hérite du layout principal #}
+{% extends 'base.html.twig' %}
+
+{# 🏷️ Titre de l’onglet navigateur #}
+{% block title %}Inscription{% endblock %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card p-4 shadow-sm">
+        
+        {# 🧾 Titre principal de la carte #}
+        <h1 class="h4 mb-4 text-center">Créer un compte</h1>
+
+        {# ✅ Affiche les messages flash en cas de succès #}
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {# 🎨 Applique le thème Bootstrap au formulaire #}
+        {% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
+        {# 🖊️ Démarre le formulaire Symfony #}
+        {{ form_start(registrationForm) }}
+
+        {# 📧 Champ Email avec espacement visuel #}
+        <div class="mb-3">
+          {{ form_row(registrationForm.email) }}
+        </div>
+
+        {# 👤 Nom d’utilisateur #}
+        <div class="mb-3">
+          {{ form_row(registrationForm.username) }}
+        </div>
+
+        {# 📝 Prénom #}
+        <div class="mb-3">
+          {{ form_row(registrationForm.firstName) }}
+        </div>
+
+        {# 📝 Nom #}
+        <div class="mb-3">
+          {{ form_row(registrationForm.lastName) }}
+        </div>
+
+        {# 🔐 Champ mot de passe personnalisé (rendu manuellement) #}
+        <div class="mb-3">
+          <label for="registration_form_plainPassword" class="form-label">Mot de passe</label>
+          <input
+            type="password"
+            name="registration_form[plainPassword]"
+            id="registration_form_plainPassword"
+            class="form-control"
+            autocomplete="new-password"
+            required
+          >
+
+          {# 👁️ Case à cocher pour afficher le mot de passe #}
+          <div class="form-check mt-3">
+            <input type="checkbox" class="form-check-input" id="togglePassword">
+            <label class="form-check-label" for="togglePassword">Afficher le mot de passe</label>
+          </div>
+        </div>
+
+        {# ✅ Bouton d’envoi du formulaire #}
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-primary btn-lg">S’inscrire</button>
+        </div>
+
+       
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{# ⚙️ Bloc qui injecte le script JS d’interaction #}
+{% block javascripts %}
+<script src="{{ asset('js/app.js') }}" defer></script>
+{% endblock %}

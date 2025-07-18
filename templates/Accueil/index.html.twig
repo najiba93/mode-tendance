@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Mode & Tendance{% endblock %}
+{% block main_class %}page-home{% endblock %}
+
+{% block main %}
+<div class="page-home">
+
+  {# 🎠 Carousel Bootstrap avec fade et auto-défilement #}
+  <div id="carouselAccueil"
+       class="carousel slide carousel-fade"
+       data-bs-ride="carousel"
+       data-bs-interval="1500">
+
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="/img/2im.webp" class="d-block w-100" alt="Image 1">
+      </div>
+      <div class="carousel-item">
+        <img src="/img/img3.jpg" class="d-block w-100" alt="Image 2">
+      </div>
+      <div class="carousel-item">
+        <img src="/img/img45454.jpg" class="d-block w-100" alt="Image 3">
+      </div>
+    </div>
+
+    {# ⏪ Flèches de navigation (facultatif) #}
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselAccueil" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselAccueil" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  {# 🌟 Texte promotionnel par-dessus les images #}
+  <div class="accueil">
+    <h1>NOUVELLE COLLECTION</h1>
+    <p>Découvrez nos derniers produits</p>
+    <a href="{{ path('Produits') }}" class="btn btn-light mt-3">VOIR MAINTENANT</a>
+  </div>
+
+</div>
+{% endblock %}

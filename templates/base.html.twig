@@ -1,26 +1,47 @@
-{# templates/base.html.twig #}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Mode & Tendance{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('style.css') }}">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="{{ path('home') }}">Accueil</a></li>
-                <li><a href="{{ path('product') }}">Produits</a></li>
-                <li><a href="{{ path('category') }}">Catégories</a></li>
-                <li><a href="{{ path('cart') }}">Panier</a></li>
-                <li><a href="{{ path('contact') }}">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
 
-    <main>
-        {% block body %}{% endblock %}
+    {# 🔗 Bloc pour les feuilles de style CSS (Bootstrap + icônes Flaticon) #}
+    {% block stylesheets %}
+        {# 👉 Intégration de Bootstrap via CDN pour le style responsive et les composants #}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+..." crossorigin="anonymous">
+
+        {# 📦 Import map utilisé pour gérer les modules JS (si activé côté Symfony) #}
+        {{ importmap() }}
+
+        {# 🎨 Icônes Flaticon "Bold Straight" (fi-bs-*) #}
+        <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-straight/css/uicons-bold-straight.css">
+
+        {# 🎨 Icônes Flaticon "Bold Rounded" (fi-br-*) comme fi-br-user #}
+        <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css">
+    {% endblock %}
+</head>
+
+<body>
+    {# 🧱 Inclusion du header (menu, icônes, etc.) #}
+    {% block Header %}
+        {% include "header.html.twig" %}
+    {% endblock %}
+
+    {# 🖥️ Zone principale de la page (contenu spécifique selon chaque vue) #}
+    <main class="{% block main_class %}{% endblock %}">
+        {% block main %}{% endblock %}
     </main>
-</body>
+
+    {# 🔻 Inclusion du footer à la fin de la page #}
+    <footer>
+        {% block footer %}
+            {% include "footer.html.twig" %}
+        {% endblock %}
+    </footer>
+
+    {# ⚙️ Scripts JS Bootstrap pour activer les composants dynamiques (ex: modals, dropdowns...) #}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-nd..." crossorigin="anonymous"></script>
+
+  
+  {% block javascripts %}{% endblock %}
+<body>
 </html>

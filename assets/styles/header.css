@@ -1,0 +1,86 @@
+/* Conteneur principal du header */
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Peut être flex-start si tu veux tout à gauche */
+  background-color: rgba(238, 224, 224, 1);
+  color: black;
+  padding: 10px 20px; /* Un peu de marge latérale pour mieux respirer */
+}
+
+/* Bloc contenant logo + texte */
+.logo-div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* espace entre le logo et le texte */
+  width: auto; /* Plus flexible que 30% */
+}
+
+/* Image du logo */
+.logo-header {
+  max-width: 80px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+/* Texte fallback ou branding */
+#logo-fallback {
+  font-size: 1.2rem;
+  color: black;
+  font-weight: bold;
+  font-family: 'Arial', sans-serif;
+  display: inline-block; /* Assure une bonne présentation */
+}
+
+/* Menu de navigation */
+nav ul {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  list-style: none;
+}
+
+nav a {
+ 
+  color: black;
+  font-weight: 500;
+  font-family: 'Arial', sans-serif;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: #5a5a5a; /* effet hover doux */
+}
+.icon-header a {
+  text-decoration: none; /* Enlève le soulignement des liens */
+}
+
+
+.icon-header {
+     display: flex;
+  align-items: center;
+  gap: 15px; /* espace entre les icônes */
+
+}
+
+/* Style commun à toutes les icônes Flaticon */
+.icon-header i {
+ 
+  font-size: 20px;
+  color: black;
+  transition: color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+}
+
+/* Effet au survol */
+.icon-header i:hover {
+  color: #5a5a5a;
+  transform: scale(1.1);
+}

@@ -1,0 +1,64 @@
+{# 🧱 Extension du layout de base : hérite de la structure commune comme le header/footer #}
+{% extends 'base.html.twig' %}
+
+{# 📛 Bloc 'title' : définit le titre affiché dans l'onglet du navigateur #}
+{% block title %}Ajouter un produit - Admin{% endblock %}
+
+
+{% block main %}
+
+  {#  Conteneur Bootstrap avec marge supérieure (mt-5) pour espacer du haut de la page #}
+  <div class="container mt-5">
+
+
+    {#  Rangée centrée horizontalement grâce à justify-content-center #}
+    <div class="row justify-content-center">
+
+      {#  Colonne de largeur moyenne (6 sur 12) pour centrer le formulaire #}
+      <div class="col-md-6">
+
+        {#  Carte Bootstrap avec padding et ombre légère pour une présentation soignée #}
+        <div class="card p-4 shadow-sm">
+          
+          {#  Titre du formulaire centré, taille h4 et espacement vers le bas (mb-3) #}
+          <h1 class="h4 mb-3 text-center">Ajouter un nouveau produit</h1>
+
+          {#  Application du thème Bootstrap 5 au formulaire pour une apparence cohérente #}
+          {% form_theme form 'bootstrap_5_layout.html.twig' %}
+
+          {#  Ouverture du formulaire : génère les balises <form> et gère la soumission #}
+          {{ form_start(form) }}
+
+            {#  Champ du nom du produit : label + input + gestion des erreurs #}
+            <div class="mb-3">
+              {{ form_row(form.nom) }}
+            </div>
+
+            {#  Champ de description du produit : textarea ou champ texte, selon config Symfony #}
+            <div class="mb-3">
+              {{ form_row(form.description) }}
+            </div>
+
+            {#  Champ du prix : généralement un champ numérique #}
+            <div class="mb-3">
+              {{ form_row(form.prix) }}
+            </div>
+
+            {#  Champ pour l’image du produit : gestion de l’upload de fichier image #}
+            <div class="mb-3">
+           
+{{ form_row(form.imageFile) }}
+
+            </div>
+
+            {#  Bouton de soumission : style Bootstrap 'btn-primary' et bouton large #}
+            <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
+
+          {#  Fermeture du formulaire avec ajout éventuel de champs cachés ou JS #}
+          {{ form_end(form) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
