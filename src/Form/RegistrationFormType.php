@@ -29,10 +29,12 @@ class RegistrationFormType extends AbstractType
     'label' => 'Nom'
 ])
 
-            ->add('plainPassword', TextType::class, [
-                'label' => 'Mot de passe',
-                'mapped' => false // On va l’encoder dans le contrôleur
-            ]);
+           ->add('plainPassword', PasswordType::class, [
+    'label' => 'Mot de passe',
+    'mapped' => false,
+    'attr' => ['autocomplete' => 'new-password']
+])
+;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
