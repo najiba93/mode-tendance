@@ -13,6 +13,32 @@ main {
   flex: 1;
 }
 
+
+
+.img-panier {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .img-panier {
+    width: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .img-panier {
+    width: 60px;
+  }
+}
+
+
+
+
+
+
 /* Le footer reste en bas */
 footer {
   background-color: rgba(238, 224, 224, 1);

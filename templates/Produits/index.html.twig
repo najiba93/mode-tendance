@@ -22,7 +22,11 @@
           <p class="card-text">{{ produit.description }}</p>
           <p class="card-text"><strong>Prix :</strong> {{ produit.prix }} €</p>
           {% if produit.image %}
-          <img src="{{ asset(produit.image) }}" alt="Image du produit" class="img-fluid">
+<a href="{{ path('produits_carte', {id: produit.id}) }}">
+  <img src="{{ asset(produit.image) }}" alt="{{ produit.nom }}" class="img-fluid">
+</a>
+
+
 
           {% endif %}
         </div>

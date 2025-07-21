@@ -97,4 +97,35 @@ class Produit
 
         return $this;
     }
+
+#[ORM\Column(type: 'json', nullable: true)]
+private ?array $couleurs = [];
+
+public function getCouleurs(): ?array
+{
+    return $this->couleurs;
+}
+
+public function setCouleurs(?array $couleurs): self
+{
+    $this->couleurs = $couleurs;
+    return $this;
+}
+
+
+#[ORM\Column(type: 'json', nullable: true)]
+private ?array $tailles = [];
+
+public function getTailles(): ?array
+{
+    return $this->tailles;
+}
+
+public function setTailles(?array $tailles): self
+{
+    $this->tailles = $tailles;
+    return $this;
+}
+
+
 }

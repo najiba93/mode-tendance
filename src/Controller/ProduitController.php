@@ -111,5 +111,20 @@ public function adminNew(Request $request, EntityManagerInterface $em): Response
 }
 
 
+#[Route('/produits/{id}', name: 'produits_carte')]
+public function show(Produit $produit): Response
+{
+    return $this->render('produits/carte.html.twig', [
+        'produit' => $produit,
+    ]);
+}
+
+
+
+
+
+
+
+
 
 }

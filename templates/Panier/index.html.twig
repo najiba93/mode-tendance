@@ -3,5 +3,63 @@
 {% block title %}Mon Panier{% endblock %}
 
 {% block main %}
-    <h1>Contenu du panier</h1>
+<div class="container mt-5">
+  <h2 class="mb-4">Mon Panier</h2>
+
+  {% if panier is empty %}
+    <div class="alert alert-info">Votre panier est vide.</div>
+  {% else %}
+  
+<div class="table-responsive">
+    <table class="table table-bordered table-responsive table-striped align-middle">
+
+      <thead>
+   <tr>
+  <th>Image</th>
+  <th>Produit</th>
+  <th>Quantité</th>
+  <th>Prix unitaire</th>
+
+  <th>Sous-total</th>
+  <th>🗑️</th>
+</tr>
+
+      </thead>
+      <tbody>
+        {% for item in panier %}
+        <tr>
+<td>
+  {% if item.produit.image %}
+    <img src="{{ asset(item.produit.image) }}" alt="{{ item.produit.nom }}" class="img-panier">
+  {% else %}
+    <img src="{{ asset('images/default.jpg') }}" alt="Image par défaut" class="img-panier">
+  {% endif %}
+</td>
+
+
+
+
+          <td>{{ item.produit.nom }}</td>
+          <td>{{ item.quantite }}</td>
+          <td>{{ item.produit.prix }} €</td>
+          <td>{{ item.sousTotal }} €</td>
+
+
+
+          <td class="text-center">
+  <a href="{{ path('supprimer_du_panier', {id: item.produit.id}) }}" class="btn btn-outline-danger btn-sm" title="Retirer">
+    🗑️
+  </a>
+</td>
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+</div>
+    <div class="text-end">
+      <h4>Total : {{ total }} € TTC</h4>
+    </div>
+  {% endif %}
+</div>
 {% endblock %}

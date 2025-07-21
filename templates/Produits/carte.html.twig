@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ produit.nom }}{% endblock %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ asset(produit.image) }}" alt="{{ produit.nom }}" class="img-fluid rounded">
+    </div>
+
+    <div class="col-md-6">
+      <h1>{{ produit.nom }}</h1>
+     {% if produit.categorie %}
+  <p class="text-muted">Catégorie : {{ produit.categorie.nom }}</p>
+{% else %}
+  <p class="text-muted text-danger">Catégorie non définie</p>
+{% endif %}
+
+      <h4 class="text-primary">{{ produit.prix }} € TTC</h4>
+
+      {# Couleur - si tu as ce champ dans ton entité Produit #}
+      {% if produit.couleurs %}
+        <label>Couleur :</label>
+        <select class="form-select mb-2">
+          {% for couleur in produit.couleurs %}
+            <option>{{ couleur }}</option>
+          {% endfor %}
+        </select>
+      {% endif %}
+
+      {# Taille - idem si disponible #}
+      {% if produit.tailles %}
+        <label>Taille :</label>
+        <select class="form-select mb-2">
+          {% for taille in produit.tailles %}
+            <option>{{ taille }}</option>
+          {% endfor %}
+        </select>
+      {% endif %}
+
+      {# Ajouter au panier #}
+      <form method="post" action="{{ path('ajouter_au_panier', {id: produit.id}) }}">
+        <label>Quantité :</label>
+        <input type="number" name="quantite" value="1" min="1" class="form-control mb-3">
+        <button type="submit" class="btn btn-dark w-100">Ajouter au panier</button>
+      </form>
+
+      {# Infos livraison et paiement sécurisés #}
+      <div class="mt-4 p-3 bg-light border rounded">
+        <ul class="list-unstyled mb-0">
+          <li>📦 Livraison 24/48H en point relais DPD</li>
+          <li>🚚 Frais de port offerts dès 69€ en France et Belgique</li>
+          <li>🔐 Paiement sécurisé CB / PayPal</li>
+          <li>🔄 Satisfait ou remboursé</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <h3>Description</h3>
+    <p>{{ produit.description }}</p>
+  </div>
+</div>
+{% endblock %}

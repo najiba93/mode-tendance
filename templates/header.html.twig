@@ -1,88 +1,64 @@
 <header>
-	{#  Bloc du logo avec fallback text au cas où l’image ne charge pas #}
-	<div class="logo-div">
-		<img src="/img/logo.jpg" alt="Logo Mode & Tendance" class="logo-header">
-		<span id="logo-fallback">Mode & Tendance</span>
-	</div>
+  {#  Logo principal du site avec un fallback si l’image ne charge pas #}
+  <div class="logo-div">
+    <img src="/img/logo.jpg" alt="Logo Mode & Tendance" class="logo-header">
+    <span id="logo-fallback">Mode & Tendance</span>
+  </div>
 
+  {#  Menu de navigation principal #}
+  <nav>
+    <ul>
+      {#  Lien vers la page d’accueil #}
+      <li><a href="{{ path('Accueil') }}">Accueil</a></li>
 
-	{#  Menu de navigation principal #}
-	<nav>
-		<ul>
-			{#  Lien vers la page d’accueil #}
-			<li>
-				<a href="{{ path('Accueil') }}">Accueil</a>
-			</li>
+      {#  Lien vers la liste des produits #}
+      <li><a href="{{ path('Produits') }}">Produits</a></li>
 
-			{#  Lien vers la page Produits #}
-			<li>
-				<a href="{{ path('Produits') }}">Produits</a>
-			</li>
+      {#  Lien vers la page des catégories #}
+      <li><a href="{{ path('categorie') }}">Catégories</a></li>
 
+      {#  Affichage du lien "Ajouter Produit" uniquement pour les admins #}
+      {% if is_granted('ROLE_ADMIN') %}
+        <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
+      {% endif %}
+    </ul>
+  </nav>
 
+  {#  Icônes en haut à droite du header (profil, panier, contact) #}
+  <div class="icon-header dropdown">
 
-  
+    {#  Icône Profil avec menu déroulant conditionnel #}
+    <a
+      class="dropdown-toggle"
+      href="#"
+      id="profilMenu"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <i class="fi fi-br-user"></i>
+    </a>
 
+    {#  Menu déroulant : selon l’état de connexion #}
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profilMenu">
+      {% if app.user %}
+        {# Si connecté : lien vers profil + déconnexion #}
+        <li><a class="dropdown-item" href="{{ path('profil') }}">Mon Profil</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
+      {% else %}
+        {# Si non connecté : lien vers connexion + inscription #}
+        <li><a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a></li>
+        <li><a class="dropdown-item" href="{{ path('inscription') }}">Inscription</a></li>
+      {% endif %}
+    </ul>
 
+    {#  Icône Panier toujours visible #}
+    <a href="{{ path('Panier') }}" title="Mon Panier">
+      <i class="fi fi-bs-shopping-cart ms-3"></i>
+    </a>
 
-
-
-			{# Lien vers la page Catégories #}
-			<li>
-				<a href="{{ path('categorie') }}">Catégories</a>
-			</li>
-
-
-
-
-
-
-
-{% if is_granted('ROLE_ADMIN') %}
-  <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
-{% endif %}
-
-
-
-
-			{#  Liens conditionnels selon l’état de connexion de l’utilisateur #}
-			{% if app.user %}
-				{#  Utilisateur connecté : on affiche le bouton Déconnexion #}
-				<li>
-					<a href="{{ path('app_logout') }}">Déconnexion</a>
-				</li>
-			{% else %}
-				{#  Utilisateur non connecté : on propose Connexion et Inscription #}
-				<li>
-					<a href="{{ path('app_login') }}">Connexion</a>
-				</li>
-				<li>
-					<a href="{{ path('inscription') }}">Inscription</a>
-				</li>
-			{% endif %}
-		</ul>
-	</nav>
-
-
-	{#  Icônes à droite du header (profil, panier, contact) #}
-	<div
-		class="icon-header">
-
-		{#  Icône Profil — affichée uniquement si l’utilisateur est connecté #}
-		{% if app.user %}
-			<a href="{{ path('profil') }}" title="Mon Profil">
-				<i class="fi fi-br-user"></i>
-			</a>
-		{% endif %}
-
-		{#  Icône Panier — toujours visible #}
-		<a href="{{ path('Panier') }}" title="Mon Panier">
-			<i class="fi fi-bs-shopping-cart"></i>
-		</a>
-
-		{#  Icône Contact — toujours visible #}
-		<a href="{{ path('contact') }}" title="Contactez-nous">
-			<i class="fi fi-bs-envelope"></i>
-		</a>
-	</div>
+    {#  Icône Contact toujours visible #}
+    <a href="{{ path('contact') }}" title="Contactez-nous">
+      <i class="fi fi-bs-envelope ms-3"></i>
+    </a>
+  </div>
 </header>
