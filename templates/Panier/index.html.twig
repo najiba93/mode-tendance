@@ -14,7 +14,7 @@
     <table class="table table-bordered table-responsive table-striped align-middle">
 
       <thead>
-   <tr>
+   <tr class="text-center align-middle">
   <th>Image</th>
   <th>Produit</th>
   <th>Quantité</th>
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         {% for item in panier %}
-        <tr>
+        <tr class="text-center align-middle">
 <td>
   {% if item.produit.image %}
     <img src="{{ asset(item.produit.image) }}" alt="{{ item.produit.nom }}" class="img-panier">
@@ -47,7 +47,7 @@
 
 
           <td class="text-center">
-  <a href="{{ path('supprimer_du_panier', {id: item.produit.id}) }}" class="btn btn-outline-danger btn-sm" title="Retirer">
+  <a href="{{ path('supprimer_du_panier', {id: item.produit.id}) }}" class="btn  btn-sm" title="Retirer">
     🗑️
   </a>
 </td>
