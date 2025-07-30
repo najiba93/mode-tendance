@@ -11,8 +11,10 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
 
 class ProduitType extends AbstractType
 {
@@ -31,11 +33,19 @@ class ProduitType extends AbstractType
                 'label' => 'Prix',
                 'currency' => 'EUR',
             ])
-            ->add('imageFile', FileType::class, [
-                'label' => 'Fichier image (optionnel)',
-                'required' => false,
-                'mapped' => false,
-            ])
+
+
+
+
+
+
+
+->add('images', FileType::class, [
+    'label' => 'Images',
+    'multiple' => true,
+    'mapped' => false,
+    'required' => false,
+])
 
 ->add('couleurs', ChoiceType::class, [
     'choices' => [
@@ -43,12 +53,18 @@ class ProduitType extends AbstractType
         'Taupe' => 'taupe',
         'Kaki' => 'kaki',
         'Rose tendre' => 'rose tendre',
-        'Vert pomme' => 'vert pomme'
+        'Vert pomme' => 'vert pomme',
+        'Noir' => 'noir',
+        'Marron' => 'marron',
+        'Blanc' => 'blanc',
+        'Bleu marine' => 'bleu marine',
+        'Rouge cerise' => 'rouge cerise'
     ],
     'expanded' => true,
     'multiple' => true,
     'label' => 'Couleurs disponibles'
 ])
+
 
 
 
@@ -87,3 +103,4 @@ class ProduitType extends AbstractType
         ]);
     }
 }
+

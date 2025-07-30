@@ -1,130 +1,205 @@
 <?php
 
-//  Ceci est le dossier de ton contrôleur
 namespace App\Controller;
 
-//  On utilise l'entité "Produit" qui représente un produit dans ta base de données
 use App\Entity\Produit;
-
-//  On utilise le formulaire "ProduitType" qui contient les champs du produit
+use App\Entity\Categorie;
+use App\Entity\ImageProduit;
 use App\Form\ProduitType;
-
-//  C’est pour travailler avec la base de données
+use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
-//  C’est le contrôleur de base que Symfony utilise
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-//  Pour gérer la requête (ce que l’utilisateur envoie dans le formulaire)
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
-//  Pour créer des routes (URLs)
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-use App\Entity\Categorie;
-use App\Repository\ProduitRepository;
-
-
-//  C’est ton contrôleur principal pour les produits
 final class ProduitController extends AbstractController
 {
-
-
-
-
-#[Route('/Produits/categorie/{id}', name: 'produits_par_categorie')]
-public function produitsParCategorie(Categorie $categorie, ProduitRepository $produitRepository): Response
-{
-    $produits = $produitRepository->findBy(['categorie' => $categorie]);
-
-    return $this->render('Produits/index.html.twig', [
-        'produits' => $produits,
-        'categorie' => $categorie,
-    ]);
-}
-
-
-
-
-
-
-
-
-        //  Cette route permet d’accéder à l’URL "/Produits"
-    //  Elle affiche tous les produits enregistrés
     #[Route('/Produits', name: 'Produits')]
     public function index(EntityManagerInterface $em): Response
     {
-        //  On récupère tous les produits dans la base
         $produits = $em->getRepository(Produit::class)->findAll();
 
-        //  On affiche la page "Produits/index.html.twig" avec les produits
         return $this->render('Produits/index.html.twig', [
-            'produits' => $produits, //  On envoie les produits à la page Twig
+            'produits' => $produits,
         ]);
     }
 
+    #[Route('/Produits/categorie/{id}', name: 'produits_par_categorie')]
+    public function produitsParCategorie(Categorie $categorie, ProduitRepository $produitRepository): Response
+    {
+        $produits = $produitRepository->findBy(['categorie' => $categorie]);
 
-#[Route('/admin/produit/new', name: 'admin_produit_new')]
-public function adminNew(Request $request, EntityManagerInterface $em): Response
-{
-    // 📦 On crée un nouveau produit vide
-    $produit = new Produit();
+        return $this->render('Produits/index.html.twig', [
+            'produits' => $produits,
+            'categorie' => $categorie,
+        ]);
+    }
 
-    // 🧾 On construit le formulaire du produit
-    $form = $this->createForm(ProduitType::class, $produit);
+    #[Route('/admin/produit/new', name: 'admin_produit_new')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function adminNew(Request $request, EntityManagerInterface $em): Response
+    {
+        $produit = new Produit();
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
 
-    // 📥 On vérifie si l'utilisateur a rempli et soumis le formulaire
-    $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFiles = $form->get('images')->getData();
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // 🖼️ On récupère l'image envoyée par l'utilisateur
-        $imageFile = $form->get('imageFile')->getData();
+            if ($imageFiles) {
+                foreach ($imageFiles as $imageFile) {
+                    if ($this->isValidImageFile($imageFile)) {
+                        $imageProduit = $this->handleImageUpload($imageFile, $produit);
+                        if ($imageProduit) {
+                            $produit->addImage($imageProduit);
+                        }
+                    }
+                }
+            }
 
-        if ($imageFile) {
-            // 🧠 On génère un nom de fichier unique comme "image_73642.jpg"
-            $nomFichier = uniqid().'.'.$imageFile->guessExtension();
+            if ($produit->getImages()->isEmpty()) {
+                $imageDefaut = new ImageProduit();
+                $imageDefaut->setUrl('https://via.placeholder.com/400x300?text=Image+par+défaut');
+                $imageDefaut->setProduit($produit);
+                $produit->addImage($imageDefaut);
+            }
 
-            // 🗂️ On déplace le fichier dans le dossier "public/uploads/"
-            $imageFile->move('uploads/', $nomFichier);
+            $em->persist($produit);
+            $em->flush();
 
-            // 🖍️ On met le chemin de l'image dans l'objet Produit
-            $produit->setImage('uploads/'.$nomFichier);
-        } else {
-            // 🎨 Si aucune image n'est envoyée, on met une image par défaut
-            $produit->setImage('https://via.placeholder.com/400x300?text=Image+par+défaut');
+            $this->addFlash('success', 'Produit créé avec succès');
+            return $this->redirectToRoute('Produits');
         }
 
-        // 💾 On enregistre le produit dans la base de données
-        $em->persist($produit);
+        return $this->render('admin/produit_new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/produits/{id}/modifier', name: 'produit_modifier')]
+    #[IsGranted('ROLE_ADMIN')]
+    public function edit(Request $request, Produit $produit, EntityManagerInterface $em): Response
+    {
+        $form = $this->createForm(ProduitType::class, $produit);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $images = $form->get('images')->getData();
+
+            if ($images) {
+                foreach ($images as $imageFile) {
+                    if ($this->isValidImageFile($imageFile)) {
+                        $imageProduit = $this->handleImageUpload($imageFile, $produit);
+                        if ($imageProduit) {
+                            $produit->addImage($imageProduit);
+                        }
+                    }
+                }
+            }
+
+            $em->flush();
+            $this->addFlash('success', 'Produit modifié avec succès');
+
+            return $this->redirectToRoute('produits_carte', ['id' => $produit->getId()]);
+        }
+
+        return $this->render('admin/produit_modifier.html.twig', [
+            'form' => $form->createView(),
+            'produit' => $produit,
+        ]);
+    }
+
+    #[Route('/produits/{id}', name: 'produits_carte')]
+    public function show(Produit $produit): Response
+    {
+        return $this->render('produits/carte.html.twig', [
+            'produit' => $produit,
+        ]);
+    }
+
+    #[Route('/produits/{id}/supprimer', name: 'produit_supprimer', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function supprimer(Produit $produit, EntityManagerInterface $em): Response
+    {
+        foreach ($produit->getImages() as $image) {
+            $this->deleteImageFile($image->getUrl());
+        }
+
+        $em->remove($produit);
         $em->flush();
 
-        // 🔁 On redirige vers la liste des produits
+        $this->addFlash('success', 'Produit supprimé avec succès');
         return $this->redirectToRoute('Produits');
     }
 
-    // 🖥️ Si le formulaire n'est pas encore envoyé, on l'affiche
-    return $this->render('admin/produit_new.html.twig', [
-        'form' => $form->createView(),
-    ]);
-}
+    #[Route('/admin/image/{id}/supprimer', name: 'admin_image_supprimer', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function supprimerImage(ImageProduit $image, EntityManagerInterface $em): Response
+    {
+        $produitId = $image->getProduit()->getId();
+        $this->deleteImageFile($image->getUrl());
+        $em->remove($image);
+        $em->flush();
 
+        $this->addFlash('success', 'Image supprimée avec succès');
+        return $this->redirectToRoute('produit_modifier', ['id' => $produitId]);
+    }
 
-#[Route('/produits/{id}', name: 'produits_carte')]
-public function show(Produit $produit): Response
-{
-    return $this->render('produits/carte.html.twig', [
-        'produit' => $produit,
-    ]);
-}
+    private function isValidImageFile(UploadedFile $file): bool
+    {
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $maxSize = 5 * 1024 * 1024;
 
+        if (!in_array($file->getMimeType(), $allowedMimeTypes)) {
+            $this->addFlash('error', 'Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP.');
+            return false;
+        }
 
+        if ($file->getSize() > $maxSize) {
+            $this->addFlash('error', 'Le fichier est trop volumineux. Taille maximale : 5MB.');
+            return false;
+        }
 
+        return true;
+    }
 
+    private function handleImageUpload(UploadedFile $imageFile, Produit $produit): ?ImageProduit
+    {
+        $nomFichier = uniqid() . '.' . $imageFile->guessExtension();
+        $uploadDir = $this->getParameter('kernel.project_dir') . '/public/uploads/produits/';
 
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
 
+        try {
+            $imageFile->move($uploadDir, $nomFichier);
 
+            $imageProduit = new ImageProduit();
+            $imageProduit->setUrl('/uploads/produits/' . $nomFichier);
+            $imageProduit->setProduit($produit);
 
+            return $imageProduit;
+        } catch (FileException $e) {
+            $this->addFlash('error', 'Erreur lors de l\'upload de l\'image : ' . $e->getMessage());
+            return null;
+        }
+    }
 
+    private function deleteImageFile(string $imageUrl): void
+    {
+        if (strpos($imageUrl, 'placeholder') !== false || strpos($imageUrl, 'http') === 0) {
+            return;
+        }
+
+        $filePath = $this->getParameter('kernel.project_dir') . '/public' . $imageUrl;
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
 }

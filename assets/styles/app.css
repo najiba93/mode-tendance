@@ -13,6 +13,35 @@ main {
   flex: 1;
 }
 
+.image-pleinlargeur {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+
+  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+/* 🔍 Effet au survol */
+.image-pleinlargeur:hover {
+  transform: scale(1.05);
+  filter: brightness(1.05);
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 .img-panier {

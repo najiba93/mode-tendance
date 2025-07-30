@@ -14,11 +14,10 @@
       {#  Lien vers la liste des produits #}
       <li><a href="{{ path('Produits') }}">Produits</a></li>
 
-      {#  Lien vers la page des catégories #}
-      <li><a href="{{ path('categorie') }}">Catégories</a></li>
+     
 
       {#  Affichage du lien "Ajouter Produit" uniquement pour les admins #}
-      {% if is_granted('ROLE_ADMIN') %}
+      {% if is_granted("ROLE_ADMIN") %}
         <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
       {% endif %}
     </ul>

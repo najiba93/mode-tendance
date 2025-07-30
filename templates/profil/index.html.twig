@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProfilController!{% endblock %}
+
 
  {% block main %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<h2>Mon Profil</h2>
+<ul>
+  <li>Nom : {{ user.nom }}</li>
+  <li>Email : {{ user.email }}</li>
+  <li>Adresse postale : {{ user.adressePostale }}</li>
+  <li>Téléphone : {{ user.telephone }}</li>
+  <li>Adresse de livraison : {{ user.adresseLivraison }}</li>
+</ul>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<h3>Mes commandes</h3>
+<ul>
+  {% for commande in commandes %}
+    <li>Commande n°{{ commande.id }} - {{ commande.date|date('d/m/Y') }} - {{ commande.total }} €</li>
+  {% endfor %}
+</ul>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/EDW2425/Desktop/Mode & Tendance/Mode&Tendance/src/Controller/ProfilController.php</code></li>
-        <li>Your template at <code>C:/Users/EDW2425/Desktop/Mode & Tendance/Mode&Tendance/templates/profil/index.html.twig</code></li>
-    </ul>
-</div>
+{% if is_granted('ROLE_ADMIN') %}
+  <h3>Commandes clients</h3>
+  <ul>
+    {% for commande in commandesClients %}
+      <li>{{ commande.user.nom }} - {{ commande.total }} € - {{ commande.date|date('d/m/Y') }}</li>
+    {% endfor %}
+  </ul>
+  <h3>Bénéfices par jour</h3>
+  <ul>
+    {% for jour, benefice in benefices %}
+      <li>{{ jour }} : {{ benefice }} €</li>
+    {% endfor %}
+  </ul>
+{% endif %}
 {% endblock %}

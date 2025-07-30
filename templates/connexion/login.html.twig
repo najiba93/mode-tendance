@@ -34,15 +34,27 @@
         <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
 
         {# 🔐 Champ pour le mot de passe #}
-        <label for="password">Mot de passe</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+        <div class="mb-3">
+          <label for="password">Mot de passe</label>
+          <div class="input-group">
+            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+          </div>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" id="togglePassword" onclick="togglePassword()">
+            <label class="form-check-label" for="togglePassword">Afficher le mot de passe</label>
+          </div>
+        </div>
+        <script>
+function togglePassword() {
+  const input = document.getElementById('password');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+</script>
 
         {# 🛡️ Jeton CSRF pour sécuriser le formulaire contre les attaques #}
         <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
 
-<div class="mb-3">
-  <a href="{{ path('app_forgot_password') }}">Mot de passe oublié ?</a>
-</div>
+
         {# ... ton formulaire ici ... #}
       
    

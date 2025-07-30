@@ -1,7 +1,7 @@
-{# 🧱 Extension du layout de base : hérite de la structure commune comme le header/footer #}
+{#  Extension du layout de base : hérite de la structure commune comme le header/footer #}
 {% extends 'base.html.twig' %}
 
-{# 📛 Bloc 'title' : définit le titre affiché dans l'onglet du navigateur #}
+{#  Bloc 'title' : définit le titre affiché dans l'onglet du navigateur #}
 {% block title %}Ajouter un produit - Admin{% endblock %}
 
 
@@ -43,10 +43,6 @@
   </div>
 
   <div class="mb-3">
-    {{ form_row(form.imageFile) }} {# ✅ Une seule fois ! #}
-  </div>
-
-  <div class="mb-3">
     {{ form_row(form.couleurs) }}
   </div>
 
@@ -57,8 +53,12 @@
   <div class="mb-3">
     {{ form_row(form.categorie) }}
   </div>
+<div class="mb-3">
+{{ form_row(form.images) }}
+</div>
 
-  {# ✅ Le bouton bien à la fin, après tous les champs #}
+
+  {#  Le bouton bien à la fin, après tous les champs #}
   <div class="mt-4">
     <button type="submit" class="btn btn-lg btn-primary w-100">Enregistrer</button>
   </div>

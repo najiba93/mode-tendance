@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier le produit - Admin{% endblock %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+
+  {% if produit.images|length > 0 %}
+    <div class="text-center mb-4">
+      <img src="{{ asset(produit.images[0].url) }}" alt="{{ produit.nom }}" class="img-fluid rounded" style="max-height: 200px;">
+    </div>
+  {% endif %}
+
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4 shadow-sm">
+        <h1 class="h4 mb-3 text-center">Modifier le produit : {{ produit.nom }}</h1>
+
+        {% form_theme form 'bootstrap_5_layout.html.twig' %}
+        {{ form_start(form) }}
+
+        <div class="mb-3">
+          {{ form_row(form.nom) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.description) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.prix) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.images) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.couleurs) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.tailles) }}
+        </div>
+
+        <div class="mb-3">
+          {{ form_row(form.categorie) }}
+        </div>
+
+        <div class="mt-4">
+          <button type="submit" class="btn btn-lg btn-primary w-100"> Enregistrer</button>
+          
+
+        </div>
+
+        {{ form_end(form) }}
+
+
+        <form method="post" action="{{ path('produit_supprimer', {id: produit.id}) }}" onsubmit="return confirm('Confirmer la suppression ?')">
+  <button type="submit" class="btn btn-danger w-100 mt-3">🗑️ Supprimer le produit</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

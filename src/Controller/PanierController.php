@@ -62,4 +62,23 @@ class PanierController extends AbstractController
         $this->addFlash('success', 'Produit supprimé du panier');
         return $this->redirectToRoute('Panier');
     }
+
+    // ✅ Modifier la quantité dans le panier
+    #[Route('/panier/modifier-quantite/{id}', name: 'modifier_quantite_panier', methods: ['POST'])]
+    public function modifierQuantite(Request $request, int $id, SessionInterface $session): Response
+    {
+        $action = $request->request->get('action'); // "plus" ou "moins"
+        $panier = $session->get('panier', []);
+
+        if ($action === 'plus') {
+            $panier[$id] = ($panier[$id] ?? 0) + 1;
+        } elseif ($action === 'moins' && isset($panier[$id]) && $panier[$id] > 1) {
+            $panier[$id]--;
+        }
+
+        $session->set('panier', $panier);
+
+        $this->addFlash('success', 'Quantité mise à jour');
+        return $this->redirectToRoute('Panier');
+    }
 }

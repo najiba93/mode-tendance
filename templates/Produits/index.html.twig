@@ -1,39 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nos Produits{% endblock %}
+{% block title %}Produits{% endblock %}
 
 {% block main %}
-  <div class="container mt-4">
-    <h2 class="mb-4">Liste des Produits</h2>
- 
-
-{% if categorie is defined %}
-  <h2>Produits de la catégorie : {{ categorie.nom }}</h2>
-{% else %}
-  <h2>Liste des Produits</h2>
-{% endif %}
-
-
-
-    {% for produit in produits %}
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title">{{ produit.nom }}</h5>
-          <p class="card-text">{{ produit.description }}</p>
-          <p class="card-text"><strong>Prix :</strong> {{ produit.prix }} €</p>
-          {% if produit.image %}
-<a href="{{ path('produits_carte', {id: produit.id}) }}">
-  <img src="{{ asset(produit.image) }}" alt="{{ produit.nom }}" class="img-fluid">
+<div class="container-fluid px-0">
+  {% if produits is not empty %}
+    <div class="row g-0">
+      {% for produit in produits %}
+        <div class="col-12 col-sm-6 col-lg-4">
+         {% if produit.images|length > 0 %}
+  <div class="text-center mb-4">
+   <a href="{{ path('produits_carte', {id: produit.id}) }}">
+  <img src="{{ asset(produit.images[0].url) }}" alt="{{ produit.nom }}">
 </a>
 
-
-
-          {% endif %}
-        </div>
-      </div>
-    {% else %}
-      <p>Aucun produit trouvé.</p>
-    {% endfor %}
   </div>
-{% endblock %}
+{% endif %}
 
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

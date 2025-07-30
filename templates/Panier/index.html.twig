@@ -1,65 +1,74 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Mon Panier{% endblock %}
+{% block title %}Mon Panier
+{% endblock %}
 
 {% block main %}
-<div class="container mt-5">
-  <h2 class="mb-4">Mon Panier</h2>
+	<div class="container mt-5">
+		<h2 class="mb-4">Mon Panier</h2>
 
-  {% if panier is empty %}
-    <div class="alert alert-info">Votre panier est vide.</div>
-  {% else %}
-  
-<div class="table-responsive">
-    <table class="table table-bordered table-responsive table-striped align-middle">
+		{% if panier is empty %}
+			<div class="alert alert-info">Votre panier est vide.</div>
+		{% else %}
 
-      <thead>
-   <tr class="text-center align-middle">
-  <th>Image</th>
-  <th>Produit</th>
-  <th>Quantité</th>
-  <th>Prix unitaire</th>
+			<div class="table-responsive">
+				<table class="table table-bordered table-responsive table-striped align-middle">
 
-  <th>Sous-total</th>
-  <th>🗑️</th>
-</tr>
+					<thead>
+						<tr class="text-center align-middle">
+							<th>Image</th>
+							<th>Produit</th>
+							<th>Quantité</th>
+							<th>Prix unitaire</th>
 
-      </thead>
-      <tbody>
-        {% for item in panier %}
-        <tr class="text-center align-middle">
-<td>
-  {% if item.produit.image %}
-    <img src="{{ asset(item.produit.image) }}" alt="{{ item.produit.nom }}" class="img-panier">
-  {% else %}
-    <img src="{{ asset('images/default.jpg') }}" alt="Image par défaut" class="img-panier">
-  {% endif %}
-</td>
+							<th>Sous-total</th>
+							<thqua>🗑️</thqua>
+						</tr>
 
-
+					</thead>
+					<tbody>
+						{% for item in panier %}
+							<tr class="text-center align-middle">
+								<td>
+									{% if item.produit.images|length > 0 %}
+										<img src="{{ asset(item.produit.images[0].url) }}" alt="{{ item.produit.nom }}" class="img-panier">
+									{% else %}
+										<img src="{{ asset('images/default.jpg') }}" alt="Image par défaut" class="img-panier">
+									{% endif %}
+								</td>
 
 
-          <td>{{ item.produit.nom }}</td>
-          <td>{{ item.quantite }}</td>
-          <td>{{ item.produit.prix }} €</td>
-          <td>{{ item.sousTotal }} €</td>
+								<td>{{ item.produit.nom }}</td>
+								<td>
+									<form method="post" action="{{ path('modifier_quantite_panier', {id: item.produit.id}) }}" class="d-flex align-items-center justify-content-center" style="gap:5px;">
+										<button type="submit" name="action" value="moins" class="btn btn-outline-secondary btn-sm">−</button>
+										<span>{{ item.quantite }}  </span>
+										<button type="submit" name="action" value="plus" class="btn btn-outline-secondary btn-sm">+</button>
+									</form>
+								</td>
+								<td>{{ item.produit.prix }}
+									€</td>
+								<td>{{ item.sousTotal }}
+									€</td>
 
 
+								<td class="text-center">
+									<a href="{{ path('supprimer_du_panier', {id: item.produit.id}) }}" class="btn  btn-sm" title="Retirer">
+										🗑️
+									</a>
+								</td>
 
-          <td class="text-center">
-  <a href="{{ path('supprimer_du_panier', {id: item.produit.id}) }}" class="btn  btn-sm" title="Retirer">
-    🗑️
-  </a>
-</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			<div class="text-end">
+				<h4>Total :
+					{{ total }}
+					€ TTC</h4>
+			</div>
+		{% endif %}
+	</div>
 
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-</div>
-    <div class="text-end">
-      <h4>Total : {{ total }} € TTC</h4>
-    </div>
-  {% endif %}
-</div>
 {% endblock %}
