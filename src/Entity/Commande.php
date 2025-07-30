@@ -24,6 +24,9 @@ class Commande
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\Column(type: 'float')]
+    private ?float $total = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,17 @@ class Commande
     public function setDate(?\DateTimeInterface $date): static
     {
         $this->date = $date;
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(?float $total): static
+    {
+        $this->total = $total;
         return $this;
     }
 }
