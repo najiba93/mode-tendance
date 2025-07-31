@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation de commande{% endblock %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-body text-center p-5">
+                    <!-- Icône de succès -->
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+                    </div>
+
+                    <h2 class="text-success mb-3">🎉 Commande confirmée !</h2>
+                    
+                    <div class="alert alert-success">
+                        <h5 class="alert-heading">Votre commande a été enregistrée avec succès</h5>
+                        <p class="mb-0">Numéro de commande : <strong>{{ commande.commande }}</strong></p>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="fas fa-user"></i> Informations client
+                                    </h6>
+                                    <p class="mb-1"><strong>Nom :</strong> {{ commande.nom }}</p>
+                                    <p class="mb-1"><strong>Téléphone :</strong> {{ commande.telephone }}</p>
+                                    <p class="mb-0"><strong>Date :</strong> {{ commande.date|date('d/m/Y H:i') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="fas fa-map-marker-alt"></i> Adresse de livraison
+                                    </h6>
+                                    <p class="mb-0">{{ commande.adresseLivraison|nl2br }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="text-primary">📦 Résumé de votre commande</h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Quantité</th>
+                                        <th class="text-end">Prix</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in panier %}
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    {% if item.produit.images|length > 0 %}
+                                                        <img src="{{ asset(item.produit.images[0].url) }}" 
+                                                             alt="{{ item.produit.nom }}" 
+                                                             class="me-3" 
+                                                             style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+                                                    {% endif %}
+                                                    <span>{{ item.produit.nom }}</span>
+                                                </div>
+                                            </td>
+                                            <td>{{ item.quantite }}</td>
+                                            <td class="text-end">{{ item.sousTotal }}€</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot class="table-light">
+                                    <tr>
+                                        <th colspan="2">Total</th>
+                                        <th class="text-end text-primary">{{ commande.total }}€</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info mt-4">
+                        <h6 class="alert-heading">
+                            <i class="fas fa-info-circle"></i> Prochaines étapes
+                        </h6>
+                        <ul class="mb-0">
+                            <li>Vous recevrez un email de confirmation dans les prochaines minutes</li>
+                            <li>Notre équipe traitera votre commande dans les 24-48h</li>
+                            <li>Vous serez contacté pour la livraison</li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="{{ path('Accueil') }}" class="btn btn-primary me-2">
+                            <i class="fas fa-home"></i> Retour à l'accueil
+                        </a>
+                        <a href="{{ path('produits_index') }}" class="btn btn-outline-primary">
+                            <i class="fas fa-shopping-bag"></i> Continuer mes achats
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border-radius: 20px;
+}
+
+.alert {
+    border-radius: 15px;
+    border: none;
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.fas {
+    margin-right: 0.5rem;
+}
+</style>
+{% endblock %} 

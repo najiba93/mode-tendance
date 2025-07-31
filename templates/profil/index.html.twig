@@ -11,6 +11,20 @@
   <li>Téléphone : {{ user.telephone }}</li>
   <li>Adresse de livraison : {{ user.adresseLivraison }}</li>
 </ul>
+<a href="#" id="editProfile" class="btn btn-link">
+  <span class="bi bi-pencil"></span> Modifier
+</a>
+
+<div id="profileForm" style="display:none;">
+  {{ form_start(form) }}
+      {{ form_row(form.nom) }}
+      {{ form_row(form.email) }}
+      {{ form_row(form.adressePostale) }}
+      {{ form_row(form.telephone) }}
+      {{ form_row(form.adresseLivraison) }}
+      <button class="btn btn-primary">Enregistrer</button>
+  {{ form_end(form) }}
+</div>
 
 <h3>Mes commandes</h3>
 <ul>
@@ -28,9 +42,18 @@
   </ul>
   <h3>Bénéfices par jour</h3>
   <ul>
-    {% for jour, benefice in benefices %}
-      <li>{{ jour }} : {{ benefice }} €</li>
+    {% for beneficeJour in benefices %}
+    <li>{{ beneficeJour.date|date('d/m/Y') }} : {{ beneficeJour.benefice }} €</li>
     {% endfor %}
   </ul>
 {% endif %}
+
+<script>
+document.getElementById('editProfile').onclick = function(e) {
+  e.preventDefault();
+  document.getElementById('profileForm').style.display = 'block';
+  this.style.display = 'none';
+};
+</script>
+
 {% endblock %}

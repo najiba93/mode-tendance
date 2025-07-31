@@ -34,6 +34,9 @@ class RegistrationController extends AbstractController
             );
             $user->setPassword($hashedPassword);
 
+            // Définir lastName à partir du champ nom pour éviter la violation de contrainte
+            $user->setLastName($user->getNom() ?? '');
+
             // Dates d'inscription
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setUpdatedAt(new \DateTimeImmutable());

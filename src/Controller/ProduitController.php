@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-
+use App\Repository\CategorieRepository;
 final class ProduitController extends AbstractController
 {
     #[Route('/Produits', name: 'Produits')]

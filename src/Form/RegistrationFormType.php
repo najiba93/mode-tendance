@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class RegistrationFormType extends AbstractType
 {
@@ -25,16 +26,20 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom'
             ])
-          ->add('lastName', TextType::class, [
-    'label' => 'Nom'
-])
-
-           ->add('plainPassword', PasswordType::class, [
-    'label' => 'Mot de passe',
-    'mapped' => false,
-    'attr' => ['autocomplete' => 'new-password']
-])
-;
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
+                'constraints' => [
+                    new Assert\NotBlank([
+                        'message' => 'Le nom est obligatoire'
+                    ])
+                ]
+            ])
+            ->add('plainPassword', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password']
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

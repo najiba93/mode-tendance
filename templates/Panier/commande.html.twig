@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Finaliser ma commande{% endblock %}
+
+{% block main %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <!-- Résumé du panier -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">📋 Résumé de votre commande</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in panier %}
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div>
+                                <strong>{{ item.produit.nom }}</strong>
+                                <br>
+                                <small class="text-muted">Quantité: {{ item.quantite }}</small>
+                            </div>
+                            <span class="badge bg-secondary">{{ item.sousTotal }}€</span>
+                        </div>
+                        {% if not loop.last %}<hr>{% endif %}
+                    {% endfor %}
+                    
+                    <div class="border-top pt-3 mt-3">
+                        <div class="d-flex justify-content-between">
+                            <h6 class="mb-0">Total</h6>
+                            <h6 class="mb-0 text-primary">{{ total }}€</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire de commande -->
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">💳 Informations de livraison</h5>
+                </div>
+                <div class="card-body">
+                    {% form_theme form 'bootstrap_5_layout.html.twig' %}
+                    {{ form_start(form) }}
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.nom) }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            {{ form_row(form.telephone) }}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_row(form.adressePostale) }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form_row(form.adresseLivraison) }}
+                        <small class="form-text text-muted">
+                            Laissez vide si identique à l'adresse de facturation
+                        </small>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Information :</strong> Votre commande sera traitée dans les plus brefs délais.
+                        Vous recevrez un email de confirmation avec votre numéro de commande.
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        {{ form_row(form.submit) }}
+                    </div>
+
+                    {{ form_end(form) }}
+
+                    <div class="text-center mt-3">
+                        <a href="{{ path('Panier') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left"></i> Retour au panier
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    border: none;
+}
+
+.form-control {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.form-control:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+.btn {
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.badge {
+    border-radius: 8px;
+}
+</style>
+{% endblock %} 

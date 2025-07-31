@@ -44,9 +44,9 @@ class CommandeRepository extends ServiceEntityRepository
     public function getBeneficesParJour(): array
     {
         $qb = $this->createQueryBuilder('c')
-            ->select('c.date as jour, SUM(c.total) as benefice')
+            ->select('c.date, SUM(c.total) as benefice')
             ->groupBy('c.date')
-            ->orderBy('jour', 'DESC');
+            ->orderBy('c.date', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
