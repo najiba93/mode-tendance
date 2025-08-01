@@ -32,9 +32,14 @@ header {
   font-family: 'Arial', sans-serif;
   display: inline-block; /* Assure une bonne présentation */
 }
-
+nav {
+ flex-direction: column;
+   
+  /* Pour espacer les éléments */
+  width: 100%; /* Prend toute la largeur disponible */
+}
 /* Menu de navigation */
-nav ul {
+ ul {
   display: flex;
   justify-content: center;
   gap: 2em;
@@ -42,11 +47,11 @@ nav ul {
   margin: 0;
 }
 
-nav li {
+li {
   list-style: none;
 }
 
-nav a {
+ a {
   color: black;
   font-weight: 500;
   font-family: 'Arial', sans-serif;
@@ -54,14 +59,14 @@ nav a {
   text-decoration: none;
 }
 
-nav a:hover {
+ a:hover {
   color: #5a5a5a; /* effet hover doux */
 }
 
 /* Styles pour le conteneur des catégories */
 .categories-container {
   display: flex;
-  flex-direction: column;
+justify-content: center;
   align-items: center;
   gap: 10px;
   padding: 10px;
@@ -70,18 +75,16 @@ nav a:hover {
   min-width: 200px;
 }
 
-.categories-container h4 {
-  margin: 0;
-  font-size: 1rem;
-  color: #333;
-  font-weight: 600;
-}
+
 
 .categories-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   justify-content: center;
+    background-color: rgba(238, 224, 224, 1);
+  border: 1px solid rgba(238, 224, 224, 1);
+  
 }
 
 .categories-buttons .btn {
@@ -90,34 +93,37 @@ nav a:hover {
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
+  
 }
 
 .categories-buttons .btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+   background-color: rgba(206, 198, 198, 0.8);
+   border: #5a5a5a;
 }
 
 /* Styles pour le menu déroulant des catégories */
-nav .dropdown {
+.header-container nav .dropdown {
   position: relative;
 }
 
-nav .dropdown-toggle {
+.header-container nav .dropdown-toggle {
   display: flex;
   align-items: center;
   gap: 5px;
 }
 
-nav .dropdown-toggle i {
+.header-container nav .dropdown-toggle i {
   font-size: 12px;
   transition: transform 0.2s ease;
 }
 
-nav .dropdown:hover .dropdown-toggle i {
+.header-container nav .dropdown:hover .dropdown-toggle i {
   transform: rotate(180deg);
 }
 
-nav .dropdown-menu {
+.header-container nav .dropdown-menu {
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -127,7 +133,7 @@ nav .dropdown-menu {
   margin-top: 5px;
 }
 
-nav .dropdown-item {
+.header-container nav .dropdown-item {
   padding: 8px 20px;
   color: #333;
   text-decoration: none;
@@ -135,7 +141,7 @@ nav .dropdown-item {
   transition: background-color 0.2s ease;
 }
 
-nav .dropdown-item:hover {
+.header-container nav .dropdown-item:hover {
   background-color: #f8f9fa;
   color: #5a5a5a;
 }
@@ -169,4 +175,11 @@ nav .dropdown-item:hover {
 .categories-container{
 background-color: rgba(238, 224, 224, 1);
 
+}
+.header-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: rgba(238, 224, 224, 1);
 }
