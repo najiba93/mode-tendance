@@ -1,6 +1,6 @@
 /* Conteneur principal du header */
 header {
-  display: flex;
+  
   align-items: center;
   justify-content: space-between; /* Peut être flex-start si tu veux tout à gauche */
   background-color: rgba(238, 224, 224, 1);
@@ -162,4 +162,11 @@ nav .dropdown-item:hover {
 .icon-header i:hover {
   color: #5a5a5a;
   transform: scale(1.1);
+}
+
+
+
+.categories-container{
+background-color: rgba(238, 224, 224, 1);
+
 }

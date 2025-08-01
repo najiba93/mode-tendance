@@ -1,4 +1,5 @@
 <header>
+ <nav>
   {#  Logo principal du site avec un fallback si l’image ne charge pas #}
   <div class="logo-div">
     <img src="/img/logo.jpg" alt="Logo Mode & Tendance" class="logo-header">
@@ -6,9 +7,9 @@
   </div>
 
   {#  Menu de navigation principal #}
-  <nav>
+ 
     <ul>
-      {#  Lien vers la page d’accueil #}---------------------------------
+    
       <li><a href="{{ path('Accueil') }}">Accueil</a></li>
 
       {#  Lien vers la liste des produits #}
@@ -21,7 +22,7 @@
         <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
       {% endif %}
     </ul>
-  </nav>
+  
 
   {#  Icônes en haut à droite du header (profil, panier, contact) #}
   <div class="icon-header dropdown">
@@ -60,8 +61,11 @@
       <i class="fi fi-bs-envelope ms-3"></i>
     </a>
   </div>
+</nav>
+
+
   <div class="categories-container">
-    <h4>Catégories</h4>
+   
     <div class="categories-buttons">
       {% for categorie in categories %}
         <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn btn-outline-primary btn-sm">
