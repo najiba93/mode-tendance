@@ -4,12 +4,9 @@
 {#  Bloc 'title' : définit le titre affiché dans l'onglet du navigateur #}
 {% block title %}Ajouter un produit - Admin{% endblock %}
 
-
 {% block main %}
-
   {#  Conteneur Bootstrap avec marge supérieure (mt-5) pour espacer du haut de la page #}
   <div class="container mt-5 mb-5">
-
 
     {#  Rangée centrée horizontalement grâce à justify-content-center #}
     <div class="row justify-content-center">
@@ -27,44 +24,42 @@
           {% form_theme form 'bootstrap_5_layout.html.twig' %}
 
           {#  Ouverture du formulaire : génère les balises <form> et gère la soumission #}
-    {% form_theme form 'bootstrap_5_layout.html.twig' %}
-{{ form_start(form) }}
+          {{ form_start(form) }}
 
-  <div class="mb-3">
-    {{ form_row(form.nom) }}
-  </div>
+            <div class="mb-3">
+              {{ form_row(form.nom) }}
+            </div>
 
-  <div class="mb-3">
-    {{ form_row(form.description) }}
-  </div>
+            <div class="mb-3">
+              {{ form_row(form.description) }}
+            </div>
 
-  <div class="mb-3">
-    {{ form_row(form.prix) }}
-  </div>
+            <div class="mb-3">
+              {{ form_row(form.prix) }}
+            </div>
 
-  <div class="mb-3">
-    {{ form_row(form.couleurs) }}
-  </div>
+            <div class="mb-3">
+              {{ form_row(form.couleurs) }}
+            </div>
 
-  <div class="mb-3">
-    {{ form_row(form.tailles) }}
-  </div>
+            <div class="mb-3">
+              {{ form_row(form.tailles) }}
+            </div>
 
-  <div class="mb-3">
-    {{ form_row(form.categorie) }}
-  </div>
-<div class="mb-3">
-{{ form_row(form.images) }}
-</div>
+            <div class="mb-3">
+              {{ form_row(form.categorie) }}
+            </div>
 
+            <div class="mb-3">
+              {{ form_row(form.images) }}
+            </div>
 
-  {#  Le bouton bien à la fin, après tous les champs #}
-  <div class="mt-4">
-    <button type="submit" class="btn btn-lg btn-primary w-100">Enregistrer</button>
-  </div>
+            {#  Le bouton de soumission du formulaire #}
+            <div class="mt-4">
+              {{ form_row(form.submit) }}
+            </div>
 
-{{ form_end(form) }}
-
+          {{ form_end(form) }}
 
         </div>
       </div>

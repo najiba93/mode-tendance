@@ -60,4 +60,14 @@
       <i class="fi fi-bs-envelope ms-3"></i>
     </a>
   </div>
+  <div class="categories-container">
+    <h4>Catégories</h4>
+    <div class="categories-buttons">
+      {% for categorie in categories %}
+        <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn btn-outline-primary btn-sm">
+          {{ categorie.nom }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
 </header>

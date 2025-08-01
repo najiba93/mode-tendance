@@ -48,17 +48,14 @@
         </div>
 
         <div class="mt-4">
-          <button type="submit" class="btn btn-lg btn-primary w-100"> Enregistrer</button>
-          
-
+          {{ form_row(form.submit) }}
         </div>
 
         {{ form_end(form) }}
 
-
         <form method="post" action="{{ path('produit_supprimer', {id: produit.id}) }}" onsubmit="return confirm('Confirmer la suppression ?')">
-  <button type="submit" class="btn btn-danger w-100 mt-3">🗑️ Supprimer le produit</button>
-</form>
+          <button type="submit" class="btn btn-danger w-100 mt-3">Supprimer le produit</button>
+        </form>
       </div>
     </div>
   </div>

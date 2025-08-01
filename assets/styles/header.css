@@ -47,7 +47,6 @@ nav li {
 }
 
 nav a {
- 
   color: black;
   font-weight: 500;
   font-family: 'Arial', sans-serif;
@@ -58,25 +57,105 @@ nav a {
 nav a:hover {
   color: #5a5a5a; /* effet hover doux */
 }
+
+/* Styles pour le conteneur des catégories */
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  min-width: 200px;
+}
+
+.categories-container h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.categories-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.categories-buttons .btn {
+  font-size: 0.8rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.categories-buttons .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour le menu déroulant des catégories */
+nav .dropdown {
+  position: relative;
+}
+
+nav .dropdown-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+nav .dropdown-toggle i {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+nav .dropdown:hover .dropdown-toggle i {
+  transform: rotate(180deg);
+}
+
+nav .dropdown-menu {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  padding: 8px 0;
+  margin-top: 5px;
+}
+
+nav .dropdown-item {
+  padding: 8px 20px;
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.2s ease;
+}
+
+nav .dropdown-item:hover {
+  background-color: #f8f9fa;
+  color: #5a5a5a;
+}
+
 .icon-header a {
   text-decoration: none; /* Enlève le soulignement des liens */
 }
 
-
 .icon-header {
-     display: flex;
+  display: flex;
   align-items: center;
   gap: 15px; /* espace entre les icônes */
-
 }
 
 /* Style commun à toutes les icônes Flaticon */
 .icon-header i {
- 
   font-size: 20px;
   color: black;
   transition: color 0.2s ease, transform 0.2s ease;
-    text-decoration: none;
+  text-decoration: none;
 }
 
 /* Effet au survol */
