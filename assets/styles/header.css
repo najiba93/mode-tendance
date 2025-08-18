@@ -2,7 +2,7 @@
 header {
   
   align-items: center;
-  justify-content: space-between; /* Peut être flex-start si tu veux tout à gauche */
+  justify-content: space-between; 
   background-color: rgba(238, 224, 224, 1);
   color: black;
   padding: 10px 20px; /* Un peu de marge latérale pour mieux respirer */
@@ -24,7 +24,7 @@ header {
   object-fit: contain;
 }
 
-/* Texte fallback ou branding */
+/* Texte du logo */
 #logo-fallback {
   font-size: 1.2rem;
   color: black;
@@ -32,12 +32,13 @@ header {
   font-family: 'Arial', sans-serif;
   display: inline-block; /* Assure une bonne présentation */
 }
+
+/* Conteneur de la barre de navigation */
 nav {
  flex-direction: column;
-   
-  /* Pour espacer les éléments */
-  width: 100%; /* Prend toute la largeur disponible */
+  width: 100%;
 }
+
 /* Menu de navigation */
  ul {
   display: flex;
@@ -74,7 +75,6 @@ justify-content: center;
   border-radius: 8px;
   min-width: 200px;
 }
-
 
 
 .categories-buttons {
