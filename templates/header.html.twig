@@ -9,7 +9,7 @@
   </div>
 
   {#  Menu de navigation principal #}
- <nav>
+  <nav class="site-nav" id="siteNav">
     <ul>
     
       <li><a href="{{ path('Accueil') }}">Accueil</a></li>
@@ -35,6 +35,14 @@
     </div>
   </div>
   </nav>
+
+  {#  Actions à droite (bouton menu mobile + icônes) #}
+  <div class="header-actions">
+    <button class="nav-toggle" aria-controls="siteNav" aria-expanded="false" aria-label="Menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
 
   {#  Icônes en haut à droite du header (profil, panier, contact) #}
   <div class="icon-header dropdown">
@@ -72,6 +80,7 @@
     <a href="{{ path('contact') }}" title="Contactez-nous">
       <i class="fi fi-bs-envelope ms-3"></i>
     </a>
+  </div>
   </div>
 
 </div>

@@ -1,11 +1,7 @@
 /* Conteneur principal du header */
 header {
-  
-  align-items: center;
-  justify-content: space-between; 
   background-color: rgba(238, 224, 224, 1);
   color: black;
-  padding: 10px 20px; /* Un peu de marge latérale pour mieux respirer */
 }
 
 /* Bloc contenant logo + texte */
@@ -34,13 +30,13 @@ header {
 }
 
 /* Conteneur de la barre de navigation */
-nav {
- flex-direction: column;
-  width: 100%;
+nav.site-nav {
+  display: flex;
+  flex-direction: column;
 }
 
 /* Menu de navigation */
- ul {
+ .header-container nav ul {
   display: flex;
   justify-content: center;
   gap: 2em;
@@ -48,11 +44,11 @@ nav {
   margin: 0;
 }
 
-li {
+.header-container nav li {
   list-style: none;
 }
 
- a {
+ .header-container nav a {
   color: black;
   font-weight: 500;
   font-family: 'Arial', sans-serif;
@@ -60,7 +56,7 @@ li {
   text-decoration: none;
 }
 
- a:hover {
+ .header-container nav a:hover {
   color: #5a5a5a; /* effet hover doux */
 }
 
@@ -177,9 +173,76 @@ background-color: rgba(238, 224, 224, 1);
 
 }
 .header-container{
-  display: flex;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+  column-gap: 16px;
   padding: 10px 20px;
   background-color: rgba(238, 224, 224, 1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 6px;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #000;
+  margin: 4px 0;
+}
+
+/* Place nav in the center column */
+.logo-div { grid-column: 1; }
+nav.site-nav { grid-column: 2; }
+.header-actions { grid-column: 3; }
+
+/* Responsive */
+@media (max-width: 992px) {
+  .header-container {
+    grid-template-columns: auto 1fr auto;
+  }
+}
+
+@media (max-width: 768px) {
+  nav.site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(238, 224, 224, 1);
+    padding: 12px 20px 16px;
+    display: none;
+    z-index: 1000;
+  }
+
+  nav.site-nav.is-open {
+    display: block;
+  }
+
+  .header-container nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .categories-container {
+    margin-top: 8px;
+    justify-content: flex-start;
+  }
+
+  .nav-toggle { display: inline-block; }
 }

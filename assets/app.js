@@ -38,6 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
       passwordInput.type = toggle.checked ? 'text' : 'password';
     });
   }
+
+  //  Toggle du menu mobile
+  const navToggleButton = document.querySelector('.nav-toggle');
+  const siteNav = document.getElementById('siteNav');
+  if (navToggleButton && siteNav) {
+    navToggleButton.addEventListener('click', () => {
+      const isOpen = siteNav.classList.toggle('is-open');
+      navToggleButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+  }
 });
 
 
