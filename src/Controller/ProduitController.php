@@ -202,4 +202,11 @@ final class ProduitController extends AbstractController
             unlink($filePath);
         }
     }
+
+
+
+
+
+
+    
 }

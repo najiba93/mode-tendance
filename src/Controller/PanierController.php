@@ -176,7 +176,7 @@ class PanierController extends AbstractController
     }
 
     // ✅ Page de confirmation de commande
-    #[Route('/commande/confirmation/{id}', name: 'confirmation_commande')]
+    #[Route('/panier/confirmation/{id}', name: 'confirmation_commande')]
     public function confirmationCommande(Commande $commande, EntityManagerInterface $em): Response
     {
         // Récupérer les détails de la commande depuis la session ou la base de données

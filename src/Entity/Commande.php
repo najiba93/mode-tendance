@@ -5,6 +5,9 @@ namespace App\Entity;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\User;
+use App\Entity\CommandeProduit;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -39,6 +42,16 @@ class Commande
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $adresseLivraison = null;
 
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: CommandeProduit::class, cascade: ['persist'], orphanRemoval: true)]
+    private Collection $commandeProduits;
+
+    public function __construct()
+    {
+        $this->commandeProduits = new ArrayCollection();
+    }
+
+    // 🔑 Getters & Setters
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,7 +65,6 @@ class Commande
     public function setCommande(string $Commande): static
     {
         $this->Commande = $Commande;
-
         return $this;
     }
 
@@ -89,16 +101,75 @@ class Commande
         return $this;
     }
 
-    // Getters & setters
-    public function getNom(): ?string { return $this->nom; }
-    public function setNom(?string $nom): static { $this->nom = $nom; return $this; }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
 
-    public function getAdressePostale(): ?string { return $this->adressePostale; }
-    public function setAdressePostale(?string $adressePostale): static { $this->adressePostale = $adressePostale; return $this; }
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
+        return $this;
+    }
 
-    public function getTelephone(): ?string { return $this->telephone; }
-    public function setTelephone(?string $telephone): static { $this->telephone = $telephone; return $this; }
+    public function getAdressePostale(): ?string
+    {
+        return $this->adressePostale;
+    }
 
-    public function getAdresseLivraison(): ?string { return $this->adresseLivraison; }
-    public function setAdresseLivraison(?string $adresseLivraison): static { $this->adresseLivraison = $adresseLivraison; return $this; }
+    public function setAdressePostale(?string $adressePostale): static
+    {
+        $this->adressePostale = $adressePostale;
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+        return $this;
+    }
+
+    public function getAdresseLivraison(): ?string
+    {
+        return $this->adresseLivraison;
+    }
+
+    public function setAdresseLivraison(?string $adresseLivraison): static
+    {
+        $this->adresseLivraison = $adresseLivraison;
+        return $this;
+    }
+
+    // 🧾 Gestion des produits liés à la commande
+
+    public function getCommandeProduits(): Collection
+    {
+        return $this->commandeProduits;
+    }
+
+    public function addCommandeProduit(CommandeProduit $commandeProduit): static
+    {
+        if (!$this->commandeProduits->contains($commandeProduit)) {
+            $this->commandeProduits[] = $commandeProduit;
+            $commandeProduit->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommandeProduit(CommandeProduit $commandeProduit): static
+    {
+        if ($this->commandeProduits->removeElement($commandeProduit)) {
+            if ($commandeProduit->getCommande() === $this) {
+                $commandeProduit->setCommande(null);
+            }
+        }
+
+        return $this;
+    }
 }
