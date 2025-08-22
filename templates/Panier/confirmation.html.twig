@@ -57,22 +57,32 @@
                                         <th class="text-end">Prix</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    {% for item in panier %}
+                                                                    <tbody>
+                                    {% set items = panier is defined ? panier : (panierAvecDetails is defined ? panierAvecDetails : commande.commandeProduits) %}
+                                    {% for item in items %}
+
                                         <tr>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    {% if item.produit.images|length > 0 %}
-                                                        <img src="{{ asset(item.produit.images[0].url) }}" 
-                                                             alt="{{ item.produit.nom }}" 
+                                                    {% set produit = item.produit is defined ? item.produit : item.getProduit() %}
+                                                    {% set quantite = item.quantite is defined ? item.quantite : item.getQuantite() %}
+                                                    {% set sousTotal = item.sousTotal is defined ? item.sousTotal : item.getSousTotal() %}
+                                                    {% set firstImage = produit.images|first %}
+                                                    {% if firstImage %}
+                                                        <img src="{{ asset(firstImage.url) }}" 
+                                                             alt="{{ produit.nom }}" 
                                                              class="me-3" 
                                                              style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
                                                     {% endif %}
-                                                    <span>{{ item.produit.nom }}</span>
+                                                    <span>{{ produit.nom }}</span>
                                                 </div>
                                             </td>
-                                            <td>{{ item.quantite }}</td>
-                                            <td class="text-end">{{ item.sousTotal }}€</td>
+                                            <td>{{ quantite }}</td>
+                                            <td class="text-end">{{ sousTotal }}€</td>
+                                        </tr>
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="3" class="text-center text-muted">Aucun article dans cette commande.</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -110,6 +120,7 @@
         </div>
     </div>
 </div>
+
 
 
 {% endblock %} 

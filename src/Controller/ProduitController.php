@@ -49,6 +49,14 @@ final class ProduitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $imageFiles = $form->get('images')->getData();
+            $couleursTexte = $form->get('couleurs')->getData();
+
+            // Traiter les couleurs
+            if ($couleursTexte) {
+                $couleurs = array_map('trim', explode(',', $couleursTexte));
+                $couleurs = array_filter($couleurs); // Supprimer les éléments vides
+                $produit->setCouleurs($couleurs);
+            }
 
             if ($imageFiles) {
                 foreach ($imageFiles as $imageFile) {
@@ -89,8 +97,24 @@ final class ProduitController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $images = $form->get('images')->getData();
+            $couleursTexte = $form->get('couleurs')->getData();
+
+            // Traiter les couleurs
+            if ($couleursTexte) {
+                $couleurs = array_map('trim', explode(',', $couleursTexte));
+                $couleurs = array_filter($couleurs); // Supprimer les éléments vides
+                $produit->setCouleurs($couleurs);
+            }
 
             if ($images) {
+                // Supprimer les anciennes images si de nouvelles sont fournies
+                foreach ($produit->getImages() as $ancienneImage) {
+                    $this->deleteImageFile($ancienneImage->getUrl());
+                    $em->remove($ancienneImage);
+                }
+                $produit->getImages()->clear();
+
+                // Ajouter les nouvelles images
                 foreach ($images as $imageFile) {
                     if ($this->isValidImageFile($imageFile)) {
                         $imageProduit = $this->handleImageUpload($imageFile, $produit);
@@ -107,9 +131,16 @@ final class ProduitController extends AbstractController
             return $this->redirectToRoute('produits_carte', ['id' => $produit->getId()]);
         }
 
+        // Préparer les couleurs pour l'affichage
+        $couleursTexte = '';
+        if ($produit->getCouleurs()) {
+            $couleursTexte = implode(', ', $produit->getCouleurs());
+        }
+
         return $this->render('admin/produit_modifier.html.twig', [
             'form' => $form->createView(),
             'produit' => $produit,
+            'couleursTexte' => $couleursTexte,
         ]);
     }
 

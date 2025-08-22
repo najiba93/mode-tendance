@@ -63,6 +63,9 @@
       {% if app.user %}
         {# Si connecté : lien vers profil + déconnexion #}
         <li><a class="dropdown-item" href="{{ path('profil') }}">Mon Profil</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+        <li><a class="dropdown-item" href="{{ path('admin_dashboard') }}">Admin</a></li>
+        {% endif %}
         <li><a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a></li>
       {% else %}
         {# Si non connecté : lien vers connexion + inscription #}
@@ -71,9 +74,19 @@
       {% endif %}
     </ul>
 
-    {#  Icône Panier toujours visible #}
-    <a href="{{ path('Panier') }}" title="Mon Panier">
+    {#  Icône Panier toujours visible + badge quantité #}
+    {% set _panier = app.session is defined and app.session ? app.session.get('panier') : {} %}
+    {% set _count = 0 %}
+    {% if _panier %}
+      {% for _id, _qte in _panier %}
+        {% set _count = _count + _qte %}
+      {% endfor %}
+    {% endif %}
+    <a href="{{ path('Panier') }}" title="Mon Panier" style="position: relative; display: inline-block;">
       <i class="fi fi-bs-shopping-cart ms-3"></i>
+      {% if _count > 0 %}
+        <span style="position: absolute; top: -6px; right: -6px; background: #dc3545; color: #fff; border-radius: 999px; padding: 0 6px; font-size: 11px; line-height: 18px; min-width: 18px; text-align: center;">{{ _count }}</span>
+      {% endif %}
     </a>
 
     {#  Icône Contact toujours visible #}

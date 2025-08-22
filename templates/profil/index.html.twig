@@ -3,56 +3,152 @@
 
 
  {% block main %}
-<h2>Mon Profil</h2>
-<ul>
-  <li>Nom : {{ user.nom }}</li>
-  <li>Email : {{ user.email }}</li>
-  <li>Adresse postale : {{ user.adressePostale }}</li>
-  <li>Téléphone : {{ user.telephone }}</li>
-  <li>Adresse de livraison : {{ user.adresseLivraison }}</li>
-</ul>
-<a href="#" id="editProfile" class="btn btn-link">
-  <span class="bi bi-pencil"></span> Modifier
-</a>
-
-<div id="profileForm" style="display:none;">
-  {{ form_start(form) }}
-      {{ form_row(form.nom) }}
-      {{ form_row(form.email) }}
-      {{ form_row(form.adressePostale) }}
-      {{ form_row(form.telephone) }}
-      {{ form_row(form.adresseLivraison) }}
-      <button class="btn btn-primary">Enregistrer</button>
-  {{ form_end(form) }}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white text-center py-3">
+          <h2 class="h4 mb-0">
+            <i class="fas fa-user-circle me-2"></i>Mon Profil
+          </h2>
+        </div>
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-12">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-id-card text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">ID Utilisateur</small>
+                  <strong>{{ user.id }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-user text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Prénom</small>
+                  <strong>{{ user.firstName }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-user text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Nom</small>
+                  <strong>{{ user.lastName }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-envelope text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Email</small>
+                  <strong>{{ user.email }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-12">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-map-marker-alt text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Adresse postale</small>
+                  <strong>{{ user.adressePostale ?: 'Non renseignée' }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-phone text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Téléphone</small>
+                  <strong>{{ user.telephone ?: 'Non renseigné' }}</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="d-flex align-items-center p-3 bg-light rounded">
+                <i class="fas fa-truck text-primary me-3"></i>
+                <div>
+                  <small class="text-muted d-block">Adresse de livraison</small>
+                  <strong>{{ user.adresseLivraison ?: 'Non renseignée' }}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <button id="editProfile" class="btn btn-primary btn-lg">
+              <i class="fas fa-edit me-2"></i>Modifier mon profil
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="profileForm" class="card shadow-sm border-0 mt-4" style="display:none;">
+        <div class="card-header bg-success text-white text-center py-3">
+          <h3 class="h5 mb-0">
+            <i class="fas fa-edit me-2"></i>Modifier les informations
+          </h3>
+        </div>
+        <div class="card-body p-4">
+          {{ form_start(form) }}
+            <div class="row g-3">
+              <div class="col-md-6">
+                {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              <div class="col-md-6">
+                {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              <div class="col-12">
+                {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              <div class="col-12">
+                {{ form_row(form.adressePostale, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              <div class="col-12">
+                {{ form_row(form.telephone, {'attr': {'class': 'form-control'}}) }}
+              </div>
+              <div class="col-12">
+                {{ form_row(form.adresseLivraison, {'attr': {'class': 'form-control'}}) }}
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button type="submit" class="btn btn-success btn-lg me-2">
+                <i class="fas fa-save me-2"></i>Enregistrer
+              </button>
+              <button type="button" id="cancelEdit" class="btn btn-outline-secondary btn-lg">
+                <i class="fas fa-times me-2"></i>Annuler
+              </button>
+            </div>
+          {{ form_end(form) }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<h3>Mes commandes</h3>
-<ul>
-  {% for commande in commandes %}
-    <li>Commande n°{{ commande.id }} - {{ commande.date|date('d/m/Y') }} - {{ commande.total }} €</li>
-  {% endfor %}
-</ul>
 
-{% if is_granted('ROLE_ADMIN') %}
-  <h3>Commandes clients</h3>
-  <ul>
-    {% for commande in commandesClients %}
-      <li>{{ commande.user.nom }} - {{ commande.total }} € - {{ commande.date|date('d/m/Y') }}</li>
-    {% endfor %}
-  </ul>
-  <h3>Bénéfices par jour</h3>
-  <ul>
-    {% for beneficeJour in benefices %}
-    <li>{{ beneficeJour.date|date('d/m/Y') }} : {{ beneficeJour.benefice }} €</li>
-    {% endfor %}
-  </ul>
-{% endif %}
 
 <script>
 document.getElementById('editProfile').onclick = function(e) {
   e.preventDefault();
   document.getElementById('profileForm').style.display = 'block';
   this.style.display = 'none';
+};
+
+document.getElementById('cancelEdit').onclick = function(e) {
+  e.preventDefault();
+  document.getElementById('profileForm').style.display = 'none';
+  document.getElementById('editProfile').style.display = 'block';
 };
 </script>
 

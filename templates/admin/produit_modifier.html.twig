@@ -7,7 +7,18 @@
 
   {% if produit.images|length > 0 %}
     <div class="text-center mb-4">
-      <img src="{{ asset(produit.images[0].url) }}" alt="{{ produit.nom }}" class="img-fluid rounded" style="max-height: 200px;">
+      <h5 class="mb-3">Images actuelles du produit</h5>
+      <div class="row justify-content-center">
+        {% for image in produit.images %}
+          <div class="col-md-3 mb-3">
+            <img src="{{ asset(image.url) }}" alt="{{ produit.nom }}" class="img-fluid rounded" style="max-height: 150px; width: 100%; object-fit: cover;">
+          </div>
+        {% endfor %}
+      </div>
+      <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i> 
+        <strong>Note :</strong> Si vous sélectionnez de nouvelles images, les anciennes seront remplacées.
+      </div>
     </div>
   {% endif %}
 
@@ -36,7 +47,14 @@
         </div>
 
         <div class="mb-3">
-          {{ form_row(form.couleurs) }}
+          <label for="couleurs" class="form-label">Couleurs disponibles</label>
+          <input type="text" 
+                 id="couleurs" 
+                 name="produit[couleurs]" 
+                 value="{{ couleursTexte }}" 
+                 class="form-control" 
+                 placeholder="Ex: Rouge, Bleu, Vert (séparez par des virgules)">
+          <div class="form-text">Écrivez les couleurs disponibles séparées par des virgules</div>
         </div>
 
         <div class="mb-3">
