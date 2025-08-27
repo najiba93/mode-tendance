@@ -13,6 +13,10 @@
         <h1 class="h4 mb-3 text-center">Connexion</h1>
 {# 🌐 Contenu principal de la page (remplace ici "main" si ton layout attend un bloc "body") #}
 
+    {% for message in app.flashes('success') %}
+      <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <form method="post">
         {# ⚠️ Affichage d’un message d’erreur si la connexion échoue (mauvais identifiants par exemple) #}
         {% if error %}
@@ -39,17 +43,7 @@
           <div class="input-group">
             <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
           </div>
-          <div class="form-check mt-2">
-            <input type="checkbox" class="form-check-input" id="togglePassword" onclick="togglePassword()">
-            <label class="form-check-label" for="togglePassword">Afficher le mot de passe</label>
-          </div>
         </div>
-        <script>
-function togglePassword() {
-  const input = document.getElementById('password');
-  input.type = input.type === 'password' ? 'text' : 'password';
-}
-</script>
 
         {# 🛡️ Jeton CSRF pour sécuriser le formulaire contre les attaques #}
         <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">

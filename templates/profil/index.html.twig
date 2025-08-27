@@ -1,155 +1,67 @@
 {% extends 'base.html.twig' %}
+{# Ce fichier hérite du template principal base.html.twig #}
 
+{% block main %}
+{# Début du bloc "main" qui sera affiché dans la section principale de la page #}
 
+<div class="container">
+  <h2>Mon Profil</h2>
+  {# Titre principal de la page #}
 
- {% block main %}
-<div class="container py-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8 col-lg-6">
-      <div class="card shadow-sm border-0">
-        <div class="card-header bg-primary text-white text-center py-3">
-          <h2 class="h4 mb-0">
-            <i class="fas fa-user-circle me-2"></i>Mon Profil
-          </h2>
-        </div>
-        <div class="card-body p-4">
-          <div class="row g-3">
-            <div class="col-12">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-id-card text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">ID Utilisateur</small>
-                  <strong>{{ user.id }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-user text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Prénom</small>
-                  <strong>{{ user.firstName }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-user text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Nom</small>
-                  <strong>{{ user.lastName }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-12">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-envelope text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Email</small>
-                  <strong>{{ user.email }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-12">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-map-marker-alt text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Adresse postale</small>
-                  <strong>{{ user.adressePostale ?: 'Non renseignée' }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-phone text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Téléphone</small>
-                  <strong>{{ user.telephone ?: 'Non renseigné' }}</strong>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-6">
-              <div class="d-flex align-items-center p-3 bg-light rounded">
-                <i class="fas fa-truck text-primary me-3"></i>
-                <div>
-                  <small class="text-muted d-block">Adresse de livraison</small>
-                  <strong>{{ user.adresseLivraison ?: 'Non renseignée' }}</strong>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="text-center mt-4">
-            <button id="editProfile" class="btn btn-primary btn-lg">
-              <i class="fas fa-edit me-2"></i>Modifier mon profil
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <div id="profileForm" class="card shadow-sm border-0 mt-4" style="display:none;">
-        <div class="card-header bg-success text-white text-center py-3">
-          <h3 class="h5 mb-0">
-            <i class="fas fa-edit me-2"></i>Modifier les informations
-          </h3>
-        </div>
-        <div class="card-body p-4">
-          {{ form_start(form) }}
-            <div class="row g-3">
-              <div class="col-md-6">
-                {{ form_row(form.firstName, {'attr': {'class': 'form-control'}}) }}
-              </div>
-              <div class="col-md-6">
-                {{ form_row(form.lastName, {'attr': {'class': 'form-control'}}) }}
-              </div>
-              <div class="col-12">
-                {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
-              </div>
-              <div class="col-12">
-                {{ form_row(form.adressePostale, {'attr': {'class': 'form-control'}}) }}
-              </div>
-              <div class="col-12">
-                {{ form_row(form.telephone, {'attr': {'class': 'form-control'}}) }}
-              </div>
-              <div class="col-12">
-                {{ form_row(form.adresseLivraison, {'attr': {'class': 'form-control'}}) }}
-              </div>
-            </div>
-            <div class="text-center mt-4">
-              <button type="submit" class="btn btn-success btn-lg me-2">
-                <i class="fas fa-save me-2"></i>Enregistrer
-              </button>
-              <button type="button" id="cancelEdit" class="btn btn-outline-secondary btn-lg">
-                <i class="fas fa-times me-2"></i>Annuler
-              </button>
-            </div>
-          {{ form_end(form) }}
-        </div>
-      </div>
-    </div>
+  {# Affichage des informations de l'utilisateur #}
+  <p><strong>ID :</strong> {{ user.id }}</p>
+  <p><strong>Prénom :</strong> {{ user.firstName }}</p>
+  <p><strong>Nom :</strong> {{ user.lastName }}</p>
+  <p><strong>Email :</strong> {{ user.email }}</p>
+  <p><strong>Adresse postale :</strong> {{ user.adressePostale ?: 'Non renseignée' }}</p>
+  <p><strong>Téléphone :</strong> {{ user.telephone ?: 'Non renseigné' }}</p>
+  <p><strong>Adresse de livraison :</strong> {{ user.adresseLivraison ?: 'Non renseignée' }}</p>
+  {# Le symbole ?: permet d'afficher un texte par défaut si la valeur est vide #}
+
+  <button id="editProfile">Modifier mon profil</button>
+  {# Bouton pour afficher le formulaire de modification #}
+
+  <div id="profileForm" style="display:none; margin-top:20px;">
+    {# Formulaire caché au départ, qui s'affiche quand on clique sur "Modifier mon profil" #}
+    <h3>Modifier les informations</h3>
+
+    {{ form_start(form) }}
+    {# Début du formulaire Symfony #}
+
+      {# Chaque champ du formulaire est affiché avec form_row #}
+      {{ form_row(form.firstName) }}
+      {{ form_row(form.lastName) }}
+      {{ form_row(form.nom) }}
+      {{ form_row(form.email) }}
+      {{ form_row(form.adressePostale) }}
+      {{ form_row(form.telephone) }}
+      {{ form_row(form.adresseLivraison) }}
+
+      {# Bouton pour soumettre le formulaire #}
+      <button type="submit">Enregistrer</button>
+
+      {# Bouton pour annuler la modification et cacher le formulaire #}
+      <button type="button" id="cancelEdit">Annuler</button>
+
+    {{ form_end(form) }}
+    {# Fin du formulaire Symfony #}
   </div>
 </div>
 
-
-
+{# Script JavaScript pour afficher ou cacher le formulaire #}
 <script>
-document.getElementById('editProfile').onclick = function(e) {
-  e.preventDefault();
+document.getElementById('editProfile').onclick = function() {
+  // Quand on clique sur "Modifier mon profil", on affiche le formulaire
   document.getElementById('profileForm').style.display = 'block';
-  this.style.display = 'none';
+  this.style.display = 'none'; // On cache le bouton
 };
 
-document.getElementById('cancelEdit').onclick = function(e) {
-  e.preventDefault();
+document.getElementById('cancelEdit').onclick = function() {
+  // Quand on clique sur "Annuler", on cache le formulaire
   document.getElementById('profileForm').style.display = 'none';
-  document.getElementById('editProfile').style.display = 'block';
+  document.getElementById('editProfile').style.display = 'inline-block'; // On réaffiche le bouton
 };
 </script>
 
 {% endblock %}
+{# Fin du bloc "main" #}

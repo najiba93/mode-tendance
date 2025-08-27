@@ -55,7 +55,8 @@
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
-      <i class="fi fi-br-user"></i>
+      <i class="fi fi-br-user {% if app.user %}text-success{% else %}text-secondary{% endif %}"></i>
+
     </a>
 
     {#  Menu déroulant : selon l’état de connexion #}
