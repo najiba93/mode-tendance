@@ -28,13 +28,17 @@
    
     <div class="categories-buttons">
       {% for categorie in categories %}
-        <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn btn-outline-primary btn-sm">
+        <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn text-secondary btn-sm">
           {{ categorie.nom }}
         </a>
       {% endfor %}
     </div>
   </div>
   </nav>
+
+
+
+
 
   {#  Actions à droite (bouton menu mobile + icônes) #}
   <div class="header-actions">

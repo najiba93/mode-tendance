@@ -1,13 +1,19 @@
+{# Hérite du template de base #}
 {% extends 'base.html.twig' %}
 
+{# Définit le titre de la page #}
 {% block title %}Modifier le produit - Admin{% endblock %}
 
+{# Contenu principal de la page #}
 {% block main %}
 <div class="container mt-5 mb-5">
 
+  {# Vérifie si le produit a des images associées #}
   {% if produit.images|length > 0 %}
     <div class="text-center mb-4">
       <h5 class="mb-3">Images actuelles du produit</h5>
+
+      {# Affiche chaque image dans une grille responsive #}
       <div class="row justify-content-center">
         {% for image in produit.images %}
           <div class="col-md-3 mb-3">
@@ -15,6 +21,8 @@
           </div>
         {% endfor %}
       </div>
+
+      {# Message d'information sur le remplacement des images #}
       <div class="alert alert-info">
         <i class="fas fa-info-circle"></i> 
         <strong>Note :</strong> Si vous sélectionnez de nouvelles images, les anciennes seront remplacées.
@@ -22,30 +30,37 @@
     </div>
   {% endif %}
 
+  {# Formulaire de modification du produit #}
   <div class="row justify-content-center">
     <div class="col-md-6">
       <div class="card p-4 shadow-sm">
         <h1 class="h4 mb-3 text-center">Modifier le produit : {{ produit.nom }}</h1>
 
+        {# Applique le thème Bootstrap 5 au formulaire #}
         {% form_theme form 'bootstrap_5_layout.html.twig' %}
         {{ form_start(form) }}
 
+        {# Champ : nom du produit #}
         <div class="mb-3">
           {{ form_row(form.nom) }}
         </div>
 
+        {# Champ : description du produit #}
         <div class="mb-3">
           {{ form_row(form.description) }}
         </div>
 
+        {# Champ : prix du produit #}
         <div class="mb-3">
           {{ form_row(form.prix) }}
         </div>
 
+        {# Champ : ajout de nouvelles images #}
         <div class="mb-3">
           {{ form_row(form.images) }}
         </div>
 
+        {# Champ personnalisé : couleurs disponibles (texte libre) #}
         <div class="mb-3">
           <label for="couleurs" class="form-label">Couleurs disponibles</label>
           <input type="text" 
@@ -57,20 +72,24 @@
           <div class="form-text">Écrivez les couleurs disponibles séparées par des virgules</div>
         </div>
 
+        {# Champ : tailles disponibles #}
         <div class="mb-3">
           {{ form_row(form.tailles) }}
         </div>
 
+        {# Champ : catégorie du produit #}
         <div class="mb-3">
           {{ form_row(form.categorie) }}
         </div>
 
+        {# Bouton de soumission du formulaire #}
         <div class="mt-4">
           {{ form_row(form.submit) }}
         </div>
 
         {{ form_end(form) }}
 
+        {# Formulaire de suppression du produit avec confirmation #}
         <form method="post" action="{{ path('produit_supprimer', {id: produit.id}) }}" onsubmit="return confirm('Confirmer la suppression ?')">
           <button type="submit" class="btn btn-danger w-100 mt-3">Supprimer le produit</button>
         </form>

@@ -3,7 +3,10 @@ header {
   background-color: rgba(238, 224, 224, 1);
   color: black;
 }
-
+ .header-container {
+  max-width: 80%;
+  margin: 0 auto;
+ }
 /* Bloc contenant logo + texte */
 .logo-div {
   display: flex;
@@ -42,7 +45,7 @@ nav.site-nav {
 }
 
  .header-container nav a {
-  color: black;
+  color: rgb(0, 0, 0);
   font-weight: 500;
   font-family: 'Arial', sans-serif;
   transition: color 0.2s ease;
