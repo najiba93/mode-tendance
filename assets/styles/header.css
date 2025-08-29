@@ -14,20 +14,13 @@ header {
 
 /* Image du logo */
 .logo-header {
-  max-width: 80px;
+  max-width: 30%;
   height: auto;
-  border-radius: 50%;
+ 
   object-fit: contain;
 }
 
-/* Texte du logo */
-#logo-fallback {
-  font-size: 1.2rem;
-  color: black;
-  font-weight: bold;
-  font-family: 'Arial', sans-serif;
-  display: inline-block; /* Assure une bonne présentation */
-}
+
 
 /* Conteneur de la barre de navigation */
 nav.site-nav {

@@ -104,7 +104,11 @@ main {
 }
 
 
+/* le color de texte sur les photo dans la page produits */
 
+.text-brown {
+ color:rgba(238, 224, 224, 1)
+} 
 
 
 
@@ -143,3 +147,6 @@ footer {
 .fas {
     margin-right: 0.5rem;
 }
+
+
+

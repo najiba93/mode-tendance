@@ -21,7 +21,7 @@
               <a href="{{ path('produits_carte', {id: produit.id}) }}"> {# Lien vers la page détaillée du produit, avec son ID en paramètre #}
                 <div class="ratio ratio-1x1 position-relative">  {# Ratio 1:1 pour garder les images carrées et responsives #}
                   <img src="{{ asset(produit.images[0].url) }}" alt="{{ produit.nom }}" class="img-fluid img-produit">   {# Affiche la première image du produit #}
-                  <div class="position-absolute   top-50  text-info px-4 fs-3 text-end  ">  {# Overlay en bas de l’image avec le nom du produit #}
+                  <div class="position-absolute   top-50  text-brown px-4 fs-3 text-end  ">  {# Overlay en bas de l’image avec le nom du produit #}
                     <strong>{{ produit.nom }}</strong>
                   </div>
                 </div>
