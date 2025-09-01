@@ -1,5 +1,3 @@
-
-
 //  Importation des fichiers CSS globaux
 import './styles/app.css';      // Fichier de styles principaux du site
 import './styles/header.css';   // Styles spécifiques à l’en-tête du site
@@ -55,3 +53,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
  
 
+document.addEventListener('DOMContentLoaded', function() {
+  const banner = document.getElementById('cookieBanner');
+  const acceptBtn = document.getElementById('acceptCookies');
+  const refuseBtn = document.getElementById('refuseCookies');
+
+  if (localStorage.getItem('cookiesChoice')) {
+    banner.classList.add('hide');
+    console.log('Le choix des cookies a déjà été fait.');
+    console.log('Choix des cookies:', localStorage.getItem('cookiesChoice'));
+  }
+
+  acceptBtn.onclick = function() {
+    localStorage.setItem('cookiesChoice', 'accepted');
+    banner.classList.add('hide');
+    console.log('Cookies acceptés.');
+  };
+
+  refuseBtn.onclick = function() {
+    localStorage.setItem('cookiesChoice', 'refused');
+    banner.classList.add('hide');
+    console.log('Cookies refusés.');
+  }});

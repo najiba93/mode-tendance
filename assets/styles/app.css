@@ -148,5 +148,42 @@ footer {
     margin-right: 0.5rem;
 }
 
+.cookie-banner {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 30, 0.95);
+  color: #fff;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1rem;
+}
+
+.cookie-banner button {
+  background: #fff;
+  color: #222;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cookie-banner button:hover {
+  background: #eee;
+}
+
+/* Pour masquer la bannière après choix */
+.cookie-banner.hide {
+  display: none;
+}
+
 
 

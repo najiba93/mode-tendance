@@ -38,54 +38,12 @@
 
         {# Applique le thème Bootstrap 5 au formulaire #}
         {% form_theme form 'bootstrap_5_layout.html.twig' %}
+        
         {{ form_start(form) }}
 
-        {# Champ : nom du produit #}
-        <div class="mb-3">
-          {{ form_row(form.nom) }}
-        </div>
+     {{form_widget(form)}}
 
-        {# Champ : description du produit #}
-        <div class="mb-3">
-          {{ form_row(form.description) }}
-        </div>
-
-        {# Champ : prix du produit #}
-        <div class="mb-3">
-          {{ form_row(form.prix) }}
-        </div>
-
-        {# Champ : ajout de nouvelles images #}
-        <div class="mb-3">
-          {{ form_row(form.images) }}
-        </div>
-
-        {# Champ personnalisé : couleurs disponibles (texte libre) #}
-        <div class="mb-3">
-          <label for="couleurs" class="form-label">Couleurs disponibles</label>
-          <input type="text" 
-                 id="couleurs" 
-                 name="produit[couleurs]" 
-                 value="{{ couleursTexte }}" 
-                 class="form-control" 
-                 placeholder="Ex: Rouge, Bleu, Vert (séparez par des virgules)">
-          <div class="form-text">Écrivez les couleurs disponibles séparées par des virgules</div>
-        </div>
-
-        {# Champ : tailles disponibles #}
-        <div class="mb-3">
-          {{ form_row(form.tailles) }}
-        </div>
-
-        {# Champ : catégorie du produit #}
-        <div class="mb-3">
-          {{ form_row(form.categorie) }}
-        </div>
-
-        {# Bouton de soumission du formulaire #}
-        <div class="mt-4">
-          {{ form_row(form.submit) }}
-        </div>
+  
 
         {{ form_end(form) }}
 
