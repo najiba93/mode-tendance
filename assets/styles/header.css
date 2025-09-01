@@ -1,246 +1,280 @@
-/* Conteneur principal du header */
+/* ========================================
+   STYLES DU HEADER PRINCIPAL
+   ======================================== */
+
+/* Conteneur principal du header avec fond beige */
 header {
-  background-color: rgba(238, 224, 224, 1);
-  color: black;
+  background-color: rgba(238, 224, 224, 1); /* Couleur de fond beige clair */
+  color: black; /* Texte noir pour le contraste */
 }
- .header-container {
-  max-width: 80%;
-  margin: 0 auto;
- }
-/* Bloc contenant logo + texte */
+
+/* Conteneur du header avec largeur maximale et centrage */
+.header-container {
+  max-width: 80%; /* Largeur maximale pour éviter que le contenu soit trop étiré */
+  margin: 0 auto; /* Centrage horizontal automatique */
+  position: relative; /* Position relative pour les éléments enfants absolus */
+  display: grid; /* Utilise CSS Grid pour la mise en page */
+  grid-template-columns: 1fr auto 1fr; /* 3 colonnes : logo, nav, actions */
+  align-items: center; /* Centre verticalement tous les éléments */
+  column-gap: 16px; /* Espace entre les colonnes */
+  padding: 10px 20px; /* Espacement interne */
+  background-color: rgba(238, 224, 224, 1); /* Même couleur que le header */
+}
+
+/* ========================================
+   SECTION LOGO
+   ======================================== */
+
+/* Bloc contenant le logo et le texte associé */
 .logo-div {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* espace entre le logo et le texte */
-  width: auto; /* Plus flexible que 30% */
+  display: flex; /* Utilise Flexbox pour l'alignement */
+  align-items: center; /* Centre verticalement les éléments */
+  gap: 10px; /* Espace entre le logo et le texte */
+  width: auto; /* Largeur automatique selon le contenu */
+  grid-column: 1; /* Place dans la première colonne du grid */
 }
 
-/* Image du logo */
+/* Image du logo avec dimensions contrôlées */
 .logo-header {
-  max-width: 30%;
-  height: auto;
- 
-  object-fit: contain;
+  max-width: 30%; /* Largeur maximale pour éviter que le logo soit trop grand */
+  height: auto; /* Hauteur automatique pour garder les proportions */
+  object-fit: contain; /* L'image s'adapte sans être coupée */
 }
 
-
+/* ========================================
+   NAVIGATION PRINCIPALE
+   ======================================== */
 
 /* Conteneur de la barre de navigation */
 nav.site-nav {
-  display: flex;
-  flex-direction: column;
+  display: flex; /* Utilise Flexbox */
+  flex-direction: column; /* Organise les éléments verticalement */
+  grid-column: 2; /* Place dans la deuxième colonne du grid */
 }
 
-/* Menu de navigation */
- .header-container nav ul {
-  display: flex;
-  justify-content: center;
-  gap: 2em;
-  padding: 0;
-  margin: 0;
+/* Menu de navigation avec alignement horizontal */
+.header-container nav ul {
+  display: flex; /* Utilise Flexbox pour l'alignement horizontal */
+  justify-content: center; /* Centre horizontalement les éléments */
+  gap: 2em; /* Espace entre les éléments du menu */
+  padding: 0; /* Supprime le padding par défaut */
+  margin: 0; /* Supprime la marge par défaut */
 }
 
+/* Éléments de la liste de navigation */
 .header-container nav li {
-  list-style: none;
+  list-style: none; /* Supprime les puces de liste */
 }
 
- .header-container nav a {
-  color: rgb(0, 0, 0);
-  font-weight: 500;
-  font-family: 'Arial', sans-serif;
-  transition: color 0.2s ease;
-  text-decoration: none;
+/* Liens de navigation avec style et transitions */
+.header-container nav a {
+  color: rgb(0, 0, 0); /* Couleur noire pour les liens */
+  font-weight: 500; /* Police semi-grasse */
+  font-family: 'Arial', sans-serif; /* Police Arial ou sans-serif */
+  transition: color 0.2s ease; /* Transition douce pour la couleur */
+  text-decoration: none; /* Supprime le soulignement */
 }
 
- .header-container nav a:hover {
-  color: #5a5a5a; /* effet hover doux */
+/* Effet hover sur les liens de navigation */
+.header-container nav a:hover {
+  color: #5a5a5a; /* Couleur grise au survol */
 }
+
+/* ========================================
+   MENU DES CATÉGORIES
+   ======================================== */
 
 /* Styles pour le conteneur des catégories */
 .categories-container {
-  display: flex;
-justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 8px;
-  min-width: 200px;
+  display: flex; /* Utilise Flexbox */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  gap: 10px; /* Espace entre les éléments */
+  padding: 10px; /* Espacement interne */
+  background-color: rgba(238, 224, 224, 1); /* Fond beige clair */
+  border-radius: 8px; /* Coins arrondis */
+  min-width: 200px; /* Largeur minimale */
 }
 
-
+/* Conteneur des boutons de catégories */
 .categories-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-    background-color: rgba(238, 224, 224, 1);
-  border: 1px solid rgba(238, 224, 224, 1);
-  
+  display: flex; /* Utilise Flexbox */
+  flex-wrap: wrap; /* Permet le retour à la ligne */
+  gap: 8px; /* Espace entre les boutons */
+  justify-content: center; /* Centre horizontalement */
+  background-color: rgba(238, 224, 224, 1); /* Fond beige clair */
+  border: 1px solid rgba(238, 224, 224, 1); /* Bordure de même couleur */
 }
 
+/* Style des boutons de catégories */
 .categories-buttons .btn {
-  font-size: 0.8rem;
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  
+  font-size: 0.8rem; /* Police plus petite */
+  padding: 4px 8px; /* Espacement interne réduit */
+  border-radius: 4px; /* Coins légèrement arrondis */
+  text-decoration: none; /* Supprime le soulignement */
+  transition: all 0.2s ease; /* Transition douce pour tous les changements */
 }
 
+/* Effet hover sur les boutons de catégories */
 .categories-buttons .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-   background-color: rgba(206, 198, 198, 0.8);
-   border: #5a5a5a;
+  transform: translateY(-1px); /* Monte légèrement le bouton */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajoute une ombre */
+  background-color: rgba(206, 198, 198, 0.8); /* Fond gris clair au hover */
+  border: #5a5a5a; /* Bordure grise */
 }
+
+/* ========================================
+   MENUS DÉROULANTS
+   ======================================== */
 
 /* Styles pour le menu déroulant des catégories */
 .header-container nav .dropdown {
-  position: relative;
+  position: relative; /* Position relative pour le menu déroulant */
 }
 
+/* Bouton d'ouverture du menu déroulant */
 .header-container nav .dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  display: flex; /* Utilise Flexbox */
+  align-items: center; /* Centre verticalement */
+  gap: 5px; /* Espace entre le texte et l'icône */
 }
 
+/* Icône du menu déroulant avec animation */
 .header-container nav .dropdown-toggle i {
-  font-size: 12px;
-  transition: transform 0.2s ease;
+  font-size: 12px; /* Taille de l'icône */
+  transition: transform 0.2s ease; /* Transition douce pour la rotation */
 }
 
+/* Rotation de l'icône au hover */
 .header-container nav .dropdown:hover .dropdown-toggle i {
-  transform: rotate(180deg);
+  transform: rotate(180deg); /* Tourne l'icône de 180 degrés */
 }
 
+/* Menu déroulant avec style moderne */
 .header-container nav .dropdown-menu {
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  padding: 8px 0;
-  margin-top: 5px;
+  background-color: white; /* Fond blanc */
+  border: 1px solid #ddd; /* Bordure grise claire */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Ombre portée */
+  min-width: 200px; /* Largeur minimale */
+  padding: 8px 0; /* Espacement vertical */
+  margin-top: 5px; /* Marge au-dessus */
 }
 
+/* Éléments du menu déroulant */
 .header-container nav .dropdown-item {
-  padding: 8px 20px;
-  color: #333;
-  text-decoration: none;
-  display: block;
-  transition: background-color 0.2s ease;
+  padding: 8px 20px; /* Espacement interne */
+  color: #333; /* Couleur de texte sombre */
+  text-decoration: none; /* Supprime le soulignement */
+  display: block; /* Affichage en bloc */
+  transition: background-color 0.2s ease; /* Transition douce pour le fond */
 }
 
+/* Effet hover sur les éléments du menu déroulant */
 .header-container nav .dropdown-item:hover {
-  background-color: #f8f9fa;
-  color: #5a5a5a;
+  background-color: #f8f9fa; /* Fond gris très clair au hover */
+  color: #5a5a5a; /* Couleur de texte grise */
 }
 
+/* ========================================
+   ICÔNES ET ACTIONS
+   ======================================== */
+
+/* Liens des icônes sans soulignement */
 .icon-header a {
-  text-decoration: none; /* Enlève le soulignement des liens */
+  text-decoration: none; /* Supprime le soulignement */
 }
 
+/* Conteneur des icônes avec alignement */
 .icon-header {
-  display: flex;
-  align-items: center;
-  gap: 15px; /* espace entre les icônes */
+  display: flex; /* Utilise Flexbox */
+  align-items: center; /* Centre verticalement */
+  gap: 15px; /* Espace entre les icônes */
 }
 
 /* Style commun à toutes les icônes Flaticon */
 .icon-header i {
-  font-size: 20px;
-  color: black;
-  transition: color 0.2s ease, transform 0.2s ease;
-  text-decoration: none;
+  font-size: 20px; /* Taille des icônes */
+  color: black; /* Couleur noire */
+  transition: color 0.2s ease, transform 0.2s ease; /* Transitions douces */
+  text-decoration: none; /* Supprime le soulignement */
 }
 
-/* Effet au survol */
+/* Effet hover sur les icônes */
 .icon-header i:hover {
-  color: #5a5a5a;
-  transform: scale(1.1);
+  color: #5a5a5a; /* Couleur grise au hover */
+  transform: scale(1.1); /* Agrandit légèrement l'icône */
 }
 
+/* ========================================
+   BOUTON MOBILE
+   ======================================== */
 
-
-.categories-container{
-background-color: rgba(238, 224, 224, 1);
-
-}
-.header-container{
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  column-gap: 16px;
-  padding: 10px 20px;
-  background-color: rgba(238, 224, 224, 1);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-}
-
+/* Bouton de navigation mobile (hamburger) */
 .nav-toggle {
-  display: none;
-  background: transparent;
-  border: 0;
-  padding: 6px;
-  cursor: pointer;
+  display: none; /* Caché par défaut sur desktop */
+  background: transparent; /* Fond transparent */
+  border: 0; /* Pas de bordure */
+  padding: 6px; /* Espacement interne */
+  cursor: pointer; /* Curseur pointer */
 }
 
+/* Barres du bouton hamburger */
 .nav-toggle-bar {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: #000;
-  margin: 4px 0;
+  display: block; /* Affichage en bloc */
+  width: 22px; /* Largeur des barres */
+  height: 2px; /* Hauteur des barres */
+  background: #000; /* Couleur noire */
+  margin: 4px 0; /* Marge entre les barres */
 }
 
-/* Place nav in the center column */
-.logo-div { grid-column: 1; }
-nav.site-nav { grid-column: 2; }
-.header-actions { grid-column: 3; }
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
 
-/* Responsive */
+/* Adaptations pour les écrans de taille moyenne */
 @media (max-width: 992px) {
   .header-container {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto; /* Ajuste la grille pour les tablettes */
   }
 }
 
+/* Adaptations pour les écrans mobiles */
 @media (max-width: 768px) {
+  /* Navigation mobile avec position absolue */
   nav.site-nav {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(238, 224, 224, 1);
-    padding: 12px 20px 16px;
-    display: none;
-    z-index: 1000;
+    position: absolute; /* Position absolue pour le menu mobile */
+    top: 100%; /* Place sous le header */
+    left: 0; /* Aligne à gauche */
+    right: 0; /* Étend sur toute la largeur */
+    background: rgba(238, 224, 224, 1); /* Fond beige clair */
+    padding: 12px 20px 16px; /* Espacement interne */
+    display: none; /* Caché par défaut */
+    z-index: 1000; /* Au-dessus des autres éléments */
   }
 
+  /* Affichage du menu mobile quand ouvert */
   nav.site-nav.is-open {
-    display: block;
+    display: block; /* Affiche le menu */
   }
 
+  /* Menu vertical sur mobile */
   .header-container nav ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: column; /* Organise verticalement */
+    align-items: flex-start; /* Aligne à gauche */
+    gap: 12px; /* Espace entre les éléments */
   }
 
+  /* Ajustement des catégories sur mobile */
   .categories-container {
-    margin-top: 8px;
-    justify-content: flex-start;
+    margin-top: 8px; /* Marge au-dessus */
+    justify-content: flex-start; /* Aligne à gauche */
   }
 
-  .nav-toggle { display: inline-block; }
+  /* Affichage du bouton hamburger sur mobile */
+  .nav-toggle { 
+    display: inline-block; /* Affiche le bouton sur mobile */
+  }
 }
 
 

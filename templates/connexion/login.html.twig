@@ -1,77 +1,124 @@
+{# ========================================
+   TEMPLATE DE CONNEXION
+   ======================================== #}
+
 {# 🧱 On hérite du layout principal : header, footer, CSS commun... #}
 {% extends 'base.html.twig' %}
 
-{# 🏷️ Titre qui apparaîtra dans l’onglet du navigateur #}
+{# 🏷️ Titre qui apparaîtra dans l'onglet du navigateur #}
 {% block title %}Connexion{% endblock %}
 
+{# 🎯 Bloc principal de la page de connexion #}
 {% block main %}
 
+{# ========================================
+   CONTENEUR PRINCIPAL
+   ======================================== #}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
-      <div class="card p-4 shadow-sm">
-        <h1 class="h4 mb-3 text-center">Connexion</h1>
-{# 🌐 Contenu principal de la page (remplace ici "main" si ton layout attend un bloc "body") #}
-
-    {% for message in app.flashes('success') %}
-      <div class="alert alert-success">{{ message }}</div>
-    {% endfor %}
-
-    <form method="post">
-        {# ⚠️ Affichage d’un message d’erreur si la connexion échoue (mauvais identifiants par exemple) #}
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        {# ✅ Si l’utilisateur est déjà connecté, on affiche un message et le lien de déconnexion #}
-        {% if app.user %}
-            <div class="mb-3">
-                Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
-            </div>
-        {% endif %}
-
-        {# 🧾 Titre du formulaire #}
-        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-
-        {# 👤 Champ pour le nom d'utilisateur ou email #}
-        <label for="username">Email</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-
-        {# 🔐 Champ pour le mot de passe #}
-        <div class="mb-3">
-          <label for="password">Mot de passe</label>
-          <div class="input-group">
-            <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-          </div>
-        </div>
-
-        {# 🛡️ Jeton CSRF pour sécuriser le formulaire contre les attaques #}
-        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-
-
-        {# ... ton formulaire ici ... #}
       
-   
- 
-        {# 🔁 Section optionnelle : case à cocher pour rester connecté (à activer dans security.yaml) #}
-        {#
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Se souvenir de moi</label>
+      {# ========================================
+         CARTE DU FORMULAIRE
+         ======================================== #}
+      <div class="card p-4 shadow-sm">
+        
+        {# Titre principal du formulaire #}
+        <h1 class="h4 mb-3 text-center">Connexion</h1>
+        
+        {# 🌐 Contenu principal de la page (remplace ici "main" si ton layout attend un bloc "body") #}
+
+        {# ========================================
+           MESSAGES DE SUCCÈS
+           ======================================== #}
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+
+        {# ========================================
+           FORMULAIRE DE CONNEXION
+           ======================================== #}
+        <form method="post">
+            
+            {# ⚠️ Affichage d'un message d'erreur si la connexion échoue #}
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+
+            {# ✅ Si l'utilisateur est déjà connecté, on affiche un message et le lien de déconnexion #}
+            {% if app.user %}
+                <div class="mb-3">
+                    Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                </div>
+            {% endif %}
+
+            {# 🧾 Titre du formulaire #}
+            <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
+
+            {# ========================================
+               CHAMP EMAIL
+               ======================================== #}
+            {# 👤 Champ pour le nom d'utilisateur ou email #}
+            <label for="username">Email</label>
+            <input type="text" 
+                   value="{{ last_username }}" 
+                   name="_username" 
+                   id="username" 
+                   class="form-control" 
+                   autocomplete="username" 
+                   required 
+                   autofocus>
+
+            {# ========================================
+               CHAMP MOT DE PASSE
+               ======================================== #}
+            {# 🔐 Champ pour le mot de passe #}
+            <div class="mb-3">
+              <label for="password">Mot de passe</label>
+              <div class="input-group">
+                <input type="password" 
+                       name="_password" 
+                       id="password" 
+                       class="form-control" 
+                       autocomplete="current-password" 
+                       required>
+              </div>
             </div>
-        #}
 
-        {# ✅ Bouton pour soumettre le formulaire #}
-        <button class="btn btn-lg btn-primary" type="submit">
-            Se connecter
-        </button>
-    </form>
-     </div>
-      </div>
-</div>
+            {# ========================================
+               SÉCURITÉ CSRF
+               ======================================== #}
+            {# 🛡️ Jeton CSRF pour sécuriser le formulaire contre les attaques #}
+            <input type="hidden" 
+                   name="_csrf_token" 
+                   data-controller="csrf-protection" 
+                   value="{{ csrf_token('authenticate') }}">
 
+            {# ========================================
+               OPTIONS SUPPLÉMENTAIRES
+               ======================================== #}
+            {# 🔁 Section optionnelle : case à cocher pour rester connecté (à activer dans security.yaml) #}
+            {#
+                <div class="checkbox mb-3">
+                    <input type="checkbox" name="_remember_me" id="_remember_me">
+                    <label for="_remember_me">Se souvenir de moi</label>
+                </div>
+            #}
 
+            {# ========================================
+               BOUTON DE SOUMISSION
+               ======================================== #}
+            {# ✅ Bouton pour soumettre le formulaire #}
+            <button class="btn btn-lg btn-primary" type="submit">
+                Se connecter
+            </button>
+        </form>
+        
+      </div> {# Fin de la carte #}
+      
+    </div> {# Fin de la colonne #}
+  </div> {# Fin de la rangée #}
+</div> {# Fin du conteneur principal #}
 
-    </div>
 {% endblock %}
 

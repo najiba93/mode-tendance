@@ -9,111 +9,375 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ * ========================================
+ * ENTITÉ UTILISATEUR
+ * ========================================
+ * 
+ * Cette entité représente un utilisateur de l'application.
+ * Elle implémente les interfaces de sécurité Symfony pour l'authentification.
+ * 
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    // Identifiant unique
+    // ========================================
+    // PROPRIÉTÉS D'IDENTIFICATION
+    // ========================================
+    
+    /**
+     * Identifiant unique de l'utilisateur
+     * Auto-généré par la base de données
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
-    //  Email de connexion
+    /**
+     * Email de connexion (unique)
+     * Utilisé comme identifiant principal pour l'authentification
+     */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\NotBlank(message: 'L’email est obligatoire.')]
-    #[Assert\Email(message: 'L’email doit être valide.')]
+    #[Assert\NotBlank(message: 'L\'email est obligatoire.')]
+    #[Assert\Email(message: 'L\'email doit être valide.')]
     private ?string $email = null;
 
-    //  Rôles de sécurité
+    // ========================================
+    // PROPRIÉTÉS DE SÉCURITÉ
+    // ========================================
+    
+    /**
+     * Rôles de sécurité de l'utilisateur
+     * Stockés en JSON pour permettre plusieurs rôles
+     * Exemples : ROLE_USER, ROLE_ADMIN
+     */
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    //  Mot de passe
+    /**
+     * Mot de passe hashé de l'utilisateur
+     * Jamais stocké en clair pour des raisons de sécurité
+     */
     #[ORM\Column(type: 'string')]
     private ?string $password = null;
 
-    //  Informations personnelles
+    // ========================================
+    // INFORMATIONS PERSONNELLES
+    // ========================================
+    
+    /**
+     * Prénom de l'utilisateur
+     */
     #[ORM\Column(type: 'string', length: 50)]
     #[Assert\NotBlank(message: 'Le prénom est obligatoire.')]
     private ?string $firstName = null;
 
+    /**
+     * Nom de famille de l'utilisateur
+     */
     #[ORM\Column(type: 'string', length: 50)]
     private ?string $lastName = null;
 
+    /**
+     * Nom d'utilisateur personnalisé
+     * Peut être différent de l'email
+     */
     #[ORM\Column(type: 'string', length: 50)]
-    #[Assert\NotBlank(message: 'Le nom d’utilisateur est obligatoire.')]
+    #[Assert\NotBlank(message: 'Le nom d\'utilisateur est obligatoire.')]
     private ?string $username = null;
 
-    //  Dates de création et mise à jour
+    // ========================================
+    // TIMESTAMPS
+    // ========================================
+    
+    /**
+     * Date de création du compte
+     * Immutable pour garantir l'intégrité
+     */
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $createdAt = null;
 
+    /**
+     * Date de dernière modification du profil
+     * Mise à jour automatiquement
+     */
     #[ORM\Column(type: 'datetime_immutable')]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    //  Coordonnées supplémentaires
+    // ========================================
+    // COORDONNÉES ET ADRESSES
+    // ========================================
+    
+    /**
+     * Nom complet de l'utilisateur
+     * Utilisé pour l'affichage et les commandes
+     */
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private ?string $nom = null;
 
+    /**
+     * Adresse postale principale
+     * Pour la facturation et la correspondance
+     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $adressePostale = null;
 
+    /**
+     * Numéro de téléphone
+     * Pour les contacts et la livraison
+     */
     #[ORM\Column(type: 'string', length: 20, nullable: true)]
     private ?string $telephone = null;
 
+    /**
+     * Adresse de livraison
+     * Peut être différente de l'adresse postale
+     */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $adresseLivraison = null;
 
-    //  Getters & Setters
+    // ========================================
+    // GETTERS ET SETTERS
+    // ========================================
 
-    public function getId(): ?int { return $this->id; }
+    /**
+     * Récupère l'identifiant unique
+     */
+    public function getId(): ?int 
+    { 
+        return $this->id; 
+    }
 
-    public function getEmail(): ?string { return $this->email; }
-    public function setEmail(string $email): self { $this->email = $email; return $this; }
+    /**
+     * Récupère l'email de connexion
+     */
+    public function getEmail(): ?string 
+    { 
+        return $this->email; 
+    }
 
-    public function getUserIdentifier(): string { return $this->email ?? ''; }
+    /**
+     * Définit l'email de connexion
+     */
+    public function setEmail(string $email): self 
+    { 
+        $this->email = $email; 
+        return $this; 
+    }
 
-    public function getUsername(): string { return $this->username ?? ''; }
-    public function setUsername(string $username): self { $this->username = $username; return $this; }
+    /**
+     * Récupère l'identifiant principal pour l'authentification
+     * Utilise l'email comme identifiant unique
+     */
+    public function getUserIdentifier(): string 
+    { 
+        return $this->email ?? ''; 
+    }
 
-    public function getRoles(): array {
+    /**
+     * Récupère le nom d'utilisateur
+     */
+    public function getUsername(): string 
+    { 
+        return $this->username ?? ''; 
+    }
+
+    /**
+     * Définit le nom d'utilisateur
+     */
+    public function setUsername(string $username): self 
+    { 
+        $this->username = $username; 
+        return $this; 
+    }
+
+    /**
+     * Récupère les rôles de sécurité
+     * Garantit que ROLE_USER est toujours présent
+     */
+    public function getRoles(): array 
+    {
         $roles = $this->roles;
+        // Assure que ROLE_USER est toujours présent
         if (!in_array('ROLE_USER', $roles)) {
             $roles[] = 'ROLE_USER';
         }
         return array_unique($roles);
     }
-    public function setRoles(array $roles): self { $this->roles = $roles; return $this; }
 
-    public function getPassword(): string { return $this->password; }
-    public function setPassword(string $password): self { $this->password = $password; return $this; }
-
-    public function eraseCredentials(): void {
-        // Nettoyage des données sensibles si nécessaire
+    /**
+     * Définit les rôles de sécurité
+     */
+    public function setRoles(array $roles): self 
+    { 
+        $this->roles = $roles; 
+        return $this; 
     }
 
-    public function getFirstName(): ?string { return $this->firstName; }
-    public function setFirstName(string $firstName): self { $this->firstName = $firstName; return $this; }
+    /**
+     * Récupère le mot de passe hashé
+     */
+    public function getPassword(): string 
+    { 
+        return $this->password; 
+    }
 
-    public function getLastName(): ?string { return $this->lastName; }
-    public function setLastName(string $lastName): self { $this->lastName = $lastName; return $this; }
+    /**
+     * Définit le mot de passe hashé
+     */
+    public function setPassword(string $password): self 
+    { 
+        $this->password = $password; 
+        return $this; 
+    }
 
-    public function getNom(): ?string { return $this->nom; }
-    public function setNom(?string $nom): self { $this->nom = $nom; return $this; }
+    /**
+     * Nettoie les données sensibles
+     * Requis par l'interface UserInterface
+     */
+    public function eraseCredentials(): void 
+    {
+        // Nettoyage des données sensibles si nécessaire
+        // Le mot de passe est déjà hashé, pas besoin de nettoyer
+    }
 
-    public function getAdressePostale(): ?string { return $this->adressePostale; }
-    public function setAdressePostale(?string $adressePostale): self { $this->adressePostale = $adressePostale; return $this; }
+    /**
+     * Récupère le prénom
+     */
+    public function getFirstName(): ?string 
+    { 
+        return $this->firstName; 
+    }
 
-    public function getTelephone(): ?string { return $this->telephone; }
-    public function setTelephone(?string $telephone): self { $this->telephone = $telephone; return $this; }
+    /**
+     * Définit le prénom
+     */
+    public function setFirstName(string $firstName): self 
+    { 
+        $this->firstName = $firstName; 
+        return $this; 
+    }
 
-    public function getAdresseLivraison(): ?string { return $this->adresseLivraison; }
-    public function setAdresseLivraison(?string $adresseLivraison): self { $this->adresseLivraison = $adresseLivraison; return $this; }
+    /**
+     * Récupère le nom de famille
+     */
+    public function getLastName(): ?string 
+    { 
+        return $this->lastName; 
+    }
 
-    public function getCreatedAt(): ?\DateTimeImmutable { return $this->createdAt; }
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self { $this->createdAt = $createdAt; return $this; }
+    /**
+     * Définit le nom de famille
+     */
+    public function setLastName(string $lastName): self 
+    { 
+        $this->lastName = $lastName; 
+        return $this; 
+    }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable { return $this->updatedAt; }
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self { $this->updatedAt = $updatedAt; return $this; }
+    /**
+     * Récupère le nom complet
+     */
+    public function getNom(): ?string 
+    { 
+        return $this->nom; 
+    }
+
+    /**
+     * Définit le nom complet
+     */
+    public function setNom(?string $nom): self 
+    { 
+        $this->nom = $nom; 
+        return $this; 
+    }
+
+    /**
+     * Récupère l'adresse postale
+     */
+    public function getAdressePostale(): ?string 
+    { 
+        return $this->adressePostale; 
+    }
+
+    /**
+     * Définit l'adresse postale
+     */
+    public function setAdressePostale(?string $adressePostale): self 
+    { 
+        $this->adressePostale = $adressePostale; 
+        return $this; 
+    }
+
+    /**
+     * Récupère le numéro de téléphone
+     */
+    public function getTelephone(): ?string 
+    { 
+        return $this->telephone; 
+    }
+
+    /**
+     * Définit le numéro de téléphone
+     */
+    public function setTelephone(?string $telephone): self 
+    { 
+        $this->telephone = $telephone; 
+        return $this; 
+    }
+
+    /**
+     * Récupère l'adresse de livraison
+     */
+    public function getAdresseLivraison(): ?string 
+    { 
+        return $this->adresseLivraison; 
+    }
+
+    /**
+     * Définit l'adresse de livraison
+     */
+    public function setAdresseLivraison(?string $adresseLivraison): self 
+    { 
+        $this->adresseLivraison = $adresseLivraison; 
+        return $this; 
+    }
+
+    /**
+     * Récupère la date de création
+     */
+    public function getCreatedAt(): ?\DateTimeImmutable 
+    { 
+        return $this->createdAt; 
+    }
+
+    /**
+     * Définit la date de création
+     */
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self 
+    { 
+        $this->createdAt = $createdAt; 
+        return $this; 
+    }
+
+    /**
+     * Récupère la date de dernière modification
+     */
+    public function getUpdatedAt(): ?\DateTimeImmutable 
+    { 
+        return $this->updatedAt; 
+    }
+
+    /**
+     * Définit la date de dernière modification
+     */
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self 
+    { 
+        $this->updatedAt = $updatedAt; 
+        return $this; 
+    }
 }

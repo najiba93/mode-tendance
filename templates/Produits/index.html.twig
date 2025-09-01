@@ -1,42 +1,39 @@
+{# ========================================
+   TEMPLATE DE LA PAGE DES PRODUITS
+   ======================================== #}
 
+{# 🧱 On hérite du layout principal : header, footer, CSS commun... #}
 {% extends 'base.html.twig' %}
 
+{# 🏷️ Titre qui apparaîtra dans l'onglet du navigateur #}
 {% block title %}Produits{% endblock %}
 
-
 {% block main %}
-<div class="container-fluid px-0">
-  
-  {# Vérifie si la variable 'produits' contient des éléments #}
-  {% if produits is not empty %}
-    <div class="row gx-1 gy-1">
-      
-      {# Boucle sur chaque produit dans la liste 'produits' #}
-      {% for produit in produits %}
-        <div class="col-12 col-sm-6 col-lg-4">
-        
-          {% if produit.images|length > 0 %}  {# Vérifie si le produit a au moins une image associée #}
-            <div class="text-center mb-4">
-              
-              <a href="{{ path('produits_carte', {id: produit.id}) }}"> {# Lien vers la page détaillée du produit, avec son ID en paramètre #}
-                <div class="ratio ratio-1x1 position-relative">  {# Ratio 1:1 pour garder les images carrées et responsives #}
-                  <img src="{{ asset(produit.images[0].url) }}" alt="{{ produit.nom }}" class="img-fluid img-produit">   {# Affiche la première image du produit #}
-                  <div class="position-absolute   top-50  text-brown px-4 fs-3 text-end  ">  {# Overlay en bas de l’image avec le nom du produit #}
-                    <strong>{{ produit.nom }}</strong>
-                  </div>
-                </div>
-              </a>
-
-            </div>
-          {% endif %}
-
+<div class="produits-container">
+    {% if produits is not empty %}
+        <div class="produits-grid">
+            {% for produit in produits %}
+                {% if produit.images|length > 0 %}
+                    <div class="produit-card">
+                        <a href="{{ path('produits_carte', {id: produit.id}) }}" class="produit-link">
+                            <img src="{{ asset(produit.images[0].url) }}" 
+                                 alt="{{ produit.nom }}" 
+                                 class="produit-image"
+                                 loading="lazy">
+                            
+                            <div class="produit-overlay">
+                                <h4 class="produit-nom">{{ produit.nom }}</h4>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
         </div>
-
-      {% endfor %}
-
-    </div>
-  
-  
-  {% endif %} {# Optionnel : tu pourrais ajouter un message ici si aucun produit n’est disponible #}
+    {% else %}
+        <div class="no-products">
+            <h3>Aucun produit disponible</h3>
+            <p>Revenez bientôt pour découvrir nos nouveaux produits !</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

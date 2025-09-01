@@ -1,24 +1,19 @@
+/* ========================================
+   STYLES GÉNÉRAUX DE L'APPLICATION
+   ======================================== */
+
+/* Configuration du corps de la page */
 body {
-  background-color:rgba(238, 224, 224, 1);
-    display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  margin: 0;
+  background-color: rgba(238, 224, 224, 1); /* Couleur de fond beige clair */
+  display: flex; /* Utilise Flexbox pour la mise en page */
+  flex-direction: column; /* Organise les éléments verticalement */
+  min-height: 100vh; /* Hauteur minimale = 100% de la hauteur de l'écran */
+  margin: 0; /* Supprime les marges par défaut */
 }
 
-
-
-/* Le main prend tout l’espace disponible */
+/* Le bloc principal prend tout l'espace disponible */
 main {
-  flex: 1;
-}
-
-
-.img-produit {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+  flex: 1; /* Prend tout l'espace restant après le header et footer */
 }
 
 
@@ -29,51 +24,122 @@ main {
 
 
 
-.image-pleinlargeur {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  display: block;
-  margin: 0;
+
+
+
+
+
+
+.produits-container {
   padding: 0;
-  border-radius: 0;
-
-  transition: transform 0.3s ease-in-out, filter 0.3s ease-in-out;
+  margin: 0;
 }
 
-/* 🔍 Effet au survol */
-.image-pleinlargeur:hover {
-  transform: scale(1.05);
-  filter: brightness(1.05);
+.produits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.produit-card {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
 }
 
+.produit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
 
-
-
-.gallery-img {
+.produit-image {
   width: 100%;
-  height: 33vw;
-  min-height: 200px;
-  max-height: 400px;
+  height: 100%;
   object-fit: cover;
-  display: block;
+  transition: transform 0.3s ease;
+}
+
+.produit-card:hover .produit-image {
+  transform: scale(1.1);
+}
+
+.produit-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6));
+  backdrop-filter: blur(10px);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 12px 0 12px 0;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  max-width: 70%;
+}
+
+.produit-card:hover .produit-overlay {
+  transform: translateX(0);
+}
+
+.produit-nom {
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.3;
   margin: 0;
-  padding: 0;
-  border-radius: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-@media (max-width: 992px) {
-  .gallery-img {
-    height: 50vw;
-    min-height: 150px;
-    max-height: 300px;
+
+.produit-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.produit-link:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.no-products {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #6c757d;
+}
+
+.no-products h3 {
+  margin-bottom: 1rem;
+  color: #495057;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .produits-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.75rem;
+      padding: 0.75rem;
+  }
+  
+  .produit-overlay {
+      padding: 0.5rem 0.75rem;
+      max-width: 80%;
+  }
+  
+  .produit-nom {
+      font-size: 0.8rem;
   }
 }
-@media (max-width: 576px) {
-  .gallery-img {
-    height: 70vw;
-    min-height: 100px;
-    max-height: 200px;
+
+@media (max-width: 480px) {
+  .produits-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.5rem;
+      padding: 0.5rem;
   }
 }
 
@@ -84,105 +150,164 @@ main {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ========================================
+   STYLES DES IMAGES DU PANIER
+   ======================================== */
+
+/* Images des produits dans le panier */
 .img-panier {
-  width: 100px;
-  height: auto;
-  object-fit: contain;
-  border-radius: 8px;
+  width: 100px; /* Largeur fixe pour les images du panier */
+  height: auto; /* Hauteur automatique pour garder les proportions */
+  object-fit: contain; /* L'image s'adapte sans être coupée */
+  border-radius: 8px; /* Coins arrondis */
 }
 
+/* Responsive pour les images du panier */
 @media (max-width: 768px) {
   .img-panier {
-    width: 80px;
+    width: 80px; /* Plus petit sur tablette */
   }
 }
 
 @media (max-width: 480px) {
   .img-panier {
-    width: 60px;
+    width: 60px; /* Encore plus petit sur mobile */
   }
 }
 
+/* ========================================
+   OPTIMISATIONS MOBILES
+   ======================================== */
 
-/* le color de texte sur les photo dans la page produits */
+/* Adaptations pour les écrans de taille moyenne et petite */
+@media (max-width: 768px) {
+  /* Effet hover réduit sur mobile pour de meilleures performances */
+  .img-produit:hover {
+    transform: scale(1.01); /* Zoom plus subtil sur mobile */
+  }
+  
+  /* Overlay adapté pour les petits écrans */
+  .produit-overlay {
+    padding: 6px 10px; /* Espacement réduit */
+    font-size: 0.8rem; /* Police plus petite */
+  }
+}
 
+/* ========================================
+   COULEURS ET TYPOGRAPHIE
+   ======================================== */
+
+/* Couleur de texte sur les photos dans la page produits */
 .text-brown {
- color:rgba(238, 224, 224, 1)
+  color: rgba(238, 224, 224, 1); /* Texte beige clair */
 } 
 
+/* ========================================
+   FOOTER
+   ======================================== */
 
-
-/* Le footer reste en bas */
+/* Le footer reste en bas de page */
 footer {
-  background-color: rgba(238, 224, 224, 1);
-   color:black;
-  text-align: center;
-    padding: 10px 0;
-  
- 
+  background-color: rgba(238, 224, 224, 1); /* Même couleur que le body */
+  color: black; /* Texte noir */
+  text-align: center; /* Centrage du texte */
+  padding: 10px 0; /* Espacement vertical */
 }
 
+/* ========================================
+   COMPOSANTS BOOTSTRAP STYLISÉS
+   ======================================== */
 
-
-
+/* Cartes avec coins arrondis */
 .card {
-    border-radius: 20px;
+  border-radius: 20px; /* Coins très arrondis pour un look moderne */
 }
 
+/* Alertes avec style personnalisé */
 .alert {
-    border-radius: 15px;
-    border: none;
+  border-radius: 15px; /* Coins arrondis */
+  border: none; /* Supprime la bordure par défaut */
 }
 
+/* Tableaux avec style moderne */
 .table {
-    border-radius: 10px;
-    overflow: hidden;
+  border-radius: 10px; /* Coins arrondis */
+  overflow: hidden; /* Cache les débordements */
 }
 
+/* Boutons avec style personnalisé */
 .btn {
-    border-radius: 10px;
-    font-weight: 500;
+  border-radius: 10px; /* Coins arrondis */
+  font-weight: 500; /* Police semi-grasse */
 }
 
+/* Icônes FontAwesome avec espacement */
 .fas {
-    margin-right: 0.5rem;
+  margin-right: 0.5rem; /* Espace à droite des icônes */
 }
 
+/* ========================================
+   BANNIÈRE DE COOKIES
+   ======================================== */
+
+/* Bannière de cookies fixe en bas de page */
 .cookie-banner {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(30, 30, 30, 0.95);
-  color: #fff;
-  padding: 20px 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  font-size: 1rem;
+  position: fixed; /* Position fixe pour rester visible */
+  bottom: 30px; /* Distance depuis le bas */
+  left: 50%; /* Centrage horizontal */
+  transform: translateX(-50%); /* Ajustement du centrage */
+  background: rgba(30, 30, 30, 0.95); /* Fond sombre semi-transparent */
+  color: #fff; /* Texte blanc */
+  padding: 20px 30px; /* Espacement interne */
+  border-radius: 8px; /* Coins arrondis */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2); /* Ombre portée */
+  z-index: 9999; /* Très haut dans la pile pour être au-dessus de tout */
+  display: flex; /* Utilise Flexbox pour l'alignement */
+  align-items: center; /* Centre verticalement les éléments */
+  gap: 20px; /* Espace entre les éléments */
+  font-size: 1rem; /* Taille de police */
 }
 
+/* Bouton de la bannière de cookies */
 .cookie-banner button {
-  background: #fff;
-  color: #222;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
+  background: #fff; /* Fond blanc */
+  color: #222; /* Texte sombre */
+  border: none; /* Pas de bordure */
+  border-radius: 4px; /* Coins légèrement arrondis */
+  padding: 8px 18px; /* Espacement interne */
+  font-weight: bold; /* Police en gras */
+  cursor: pointer; /* Curseur pointer */
+  transition: background 0.2s; /* Transition rapide pour le fond */
 }
 
+/* Effet hover sur le bouton des cookies */
 .cookie-banner button:hover {
-  background: #eee;
+  background: #eee; /* Fond gris clair au hover */
 }
 
-/* Pour masquer la bannière après choix */
+/* Pour masquer la bannière après choix de l'utilisateur */
 .cookie-banner.hide {
-  display: none;
+  display: none; /* Cache complètement la bannière */
 }
 
 

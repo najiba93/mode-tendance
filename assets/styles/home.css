@@ -1,52 +1,76 @@
+/* ========================================
+   STYLES DE LA PAGE D'ACCUEIL
+   ======================================== */
+
+/* Conteneur principal de la page d'accueil */
 .page-home {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
+  position: relative; /* Position relative pour le positionnement des enfants */
+  height: 100vh; /* Hauteur complète de la fenêtre */
+  overflow: hidden; /* Cache les débordements pour éviter les scrollbars */
 }
 
+/* ========================================
+   CARROUSEL D'ACCUEIL
+   ======================================== */
+
+/* Carrousel principal en arrière-plan */
 #carouselAccueil {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  z-index: 1;
+  position: absolute; /* Position absolue pour couvrir toute la page */
+  top: 0; /* Aligne en haut */
+  left: 0; /* Aligne à gauche */
+  width: 100%; /* Largeur complète */
+  height: 100vh; /* Hauteur complète de la fenêtre */
+  z-index: 1; /* Place en arrière-plan */
 }
 
+/* Images du carrousel avec dimensions adaptées */
 #carouselAccueil img {
-  height: 100vh;
-  object-fit: cover;
+  height: 100vh; /* Hauteur complète de la fenêtre */
+  object-fit: cover; /* L'image couvre tout l'espace sans déformation */
 }
 
+/* ========================================
+   CONTENU PRINCIPAL DE L'ACCUEIL
+   ======================================== */
+
+/* Section de contenu principal superposée au carrousel */
 .accueil {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: white;
-  padding-top: 150px;
+  position: relative; /* Position relative pour être au-dessus du carrousel */
+  z-index: 2; /* Place au-dessus du carrousel (z-index: 1) */
+  text-align: center; /* Centre le texte horizontalement */
+  color: white; /* Texte blanc pour le contraste sur les images */
+  padding-top: 150px; /* Espacement depuis le haut pour centrer verticalement */
 }
 
+/* Titre principal de l'accueil */
 .accueil h1 {
-  font-size: 2.8rem;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 2.8rem; /* Taille de police très grande pour l'impact */
+  font-weight: bold; /* Police en gras */
+  text-transform: uppercase; /* Texte en majuscules */
 }
 
+/* Paragraphe descriptif de l'accueil */
 .accueil p {
-  font-size: 1.3rem;
-  margin-bottom: 20px;
+  font-size: 1.3rem; /* Taille de police moyenne */
+  margin-bottom: 20px; /* Espacement vers le bas */
 }
 
+/* ========================================
+   BOUTON D'ACTION PRINCIPAL
+   ======================================== */
+
+/* Bouton principal de l'accueil */
 .accueil .btn {
-  background-color: rgba(255, 255, 255, 0.85);
-  color: black;
-  border-radius: 4px;
-  font-weight: bold;
-  padding: 10px 20px;
-  text-decoration: none;
-  transition: background-color 0.3s;
+  background-color: rgba(255, 255, 255, 0.85); /* Fond blanc semi-transparent */
+  color: black; /* Texte noir pour le contraste */
+  border-radius: 4px; /* Coins légèrement arrondis */
+  font-weight: bold; /* Police en gras */
+  padding: 10px 20px; /* Espacement interne */
+  text-decoration: none; /* Supprime le soulignement */
+  transition: background-color 0.3s; /* Transition douce pour le fond */
 }
 
+/* Effet hover sur le bouton principal */
 .accueil .btn:hover {
-  background-color: #eee;
+  background-color: #eee; /* Fond gris clair au hover */
 }
