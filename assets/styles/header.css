@@ -10,7 +10,8 @@ header {
 
 /* Conteneur du header avec largeur maximale et centrage */
 .header-container {
-  max-width: 100%; /* Largeur maximale pour éviter que le contenu soit trop étiré */
+  max-width: 80%; /* Largeur maximale pour éviter que le contenu soit trop étiré */
+  min-height:200px ; /* Hauteur à 100% du parent */
   margin: 0 auto; /* Centrage horizontal automatique */
   position: relative; /* Position relative pour les éléments enfants absolus */
   display: grid; /* Utilise CSS Grid pour la mise en page */
@@ -30,13 +31,15 @@ header {
   display: flex; /* Utilise Flexbox pour l'alignement */
   align-items: center; /* Centre verticalement les éléments */
   gap: 10px; /* Espace entre le logo et le texte */
-  width: auto; /* Largeur automatique selon le contenu */
+  width: auto;
+  min-width: 100px; /* Largeur automatique selon le contenu */
   grid-column: 1; /* Place dans la première colonne du grid */
 }
 
 /* Image du logo avec dimensions contrôlées */
 .logo-header {
-  max-width: 30%; /* Largeur maximale pour éviter que le logo soit trop grand */
+  max-width: 50%;
+  min-width: 100px; /* Largeur maximale pour éviter que le logo soit trop grand */
   height: auto; /* Hauteur automatique pour garder les proportions */
   object-fit: contain; /* L'image s'adapte sans être coupée */
 }
@@ -237,7 +240,17 @@ nav.site-nav {
 /* Adaptations pour les écrans de taille moyenne */
 @media (max-width: 992px) {
   .header-container {
+    
+  max-width: 100%; 
+  
     grid-template-columns: auto 1fr auto; /* Ajuste la grille pour les tablettes */
+  }
+  .header-actions{
+    grid-column: 3; /* Place dans la 3e colonne du grid */
+    justify-self: end; /* Aligne à droite dans la colonne */
+    display: flex;
+    align-items: center; /* Corrige "left" en "center" */
+    gap: 15px;
   }
 }
 
