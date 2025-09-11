@@ -4,45 +4,49 @@
 
 ### 1. **`app.css`** - Styles Généraux
 - **Styles de base** : body, main, footer
-- **Images des produits** : `.img-produit`, `.produit-overlay`
+- **Nouveau design des produits** : `.produit-card`, `.produit-image`, `.produit-overlay`
+- **Grille responsive** : `.produits-grid`, `.produits-container`
 - **Images du panier** : `.img-panier`
 - **Composants Bootstrap** : `.card`, `.alert`, `.table`, `.btn`
 - **Bannière de cookies** : `.cookie-banner`
-- **Responsive mobile** : media queries pour les images
+- **Responsive design** : media queries pour tous les composants
 
 ### 2. **`header.css`** - Styles du Header
-- **Header principal** : structure et layout
-- **Logo et navigation** : menu principal
-- **Catégories** : menu des catégories de produits
+- **Header principal** : structure et layout avec CSS Grid
+- **Logo et navigation** : menu principal responsive
+- **Catégories** : menu des catégories avec effets hover
 - **Menus déroulants** : dropdown pour profil et actions
-- **Icônes et actions** : panier, profil, contact
+- **Icônes et actions** : panier, profil, contact avec animations
 - **Responsive mobile** : menu hamburger et adaptations
 
 ### 3. **`home.css`** - Styles de la Page d'Accueil
-- **Page d'accueil** : `.page-home`
-- **Carrousel** : `#carouselAccueil`
-- **Contenu principal** : `.accueil`
-- **Bouton d'action** : styles du bouton principal
+- **Page d'accueil** : `.page-home` avec carrousel
+- **Carrousel** : `#carouselAccueil` en arrière-plan
+- **Contenu principal** : `.accueil` superposé au carrousel
+- **Bouton d'action** : styles et effets hover
 
 ## 🚀 Optimisations Appliquées
 
 ### ✅ **Code Supprimé :**
-- Classes CSS inutilisées
-- Règles dupliquées
-- Commentaires obsolètes
-- Code mort
+- Classes CSS inutilisées et orphelines
+- Règles dupliquées et redondantes
+- Commentaires obsolètes et code mort
+- Styles non utilisés dans les templates
+- Espaces vides et lignes inutiles
 
 ### ✅ **Code Organisé :**
-- Sections clairement délimitées
-- Commentaires détaillés
-- Structure logique
-- Responsive design optimisé
+- Sections clairement délimitées avec séparateurs visuels
+- Commentaires détaillés pour chaque règle CSS
+- Structure logique et hiérarchique
+- Responsive design optimisé et organisé
+- Nouveau système de grille pour les produits
 
 ### ✅ **Performance :**
-- CSS minifié et optimisé
-- Règles spécifiques et ciblées
-- Media queries organisées
-- Transitions fluides
+- CSS optimisé et ciblé
+- Règles spécifiques et efficaces
+- Media queries organisées par breakpoint
+- Transitions fluides et animations optimisées
+- Suppression des styles inutiles
 
 ## 📱 Responsive Design
 
@@ -53,24 +57,29 @@
 - **Petit mobile** : < 480px
 
 ### **Adaptations :**
-- Images redimensionnées
-- Effets hover réduits
-- Menus adaptés
-- Espacements optimisés
+- **Grille des produits** : colonnes adaptatives
+- **Images** : redimensionnement et zoom optimisés
+- **Menus** : adaptation mobile avec hamburger
+- **Espacements** : padding et gap adaptatifs
+- **Overlays** : taille et position optimisées
 
 ## 🎨 Classes Principales
 
-### **Images :**
-- `.img-produit` - Images des produits avec hover
-- `.img-panier` - Images du panier
-- `.produit-overlay` - Overlay des noms de produits
+### **Nouveau Design des Produits :**
+- `.produits-container` - Conteneur principal des produits
+- `.produits-grid` - Grille responsive CSS Grid
+- `.produit-card` - Carte individuelle avec effets hover
+- `.produit-image` - Image avec zoom au hover
+- `.produit-overlay` - Overlay du nom avec animation slide
+- `.produit-nom` - Style du nom du produit
+- `.produit-link` - Lien de la carte produit
 
-### **Layout :**
-- `.header-container` - Conteneur principal du header
-- `.page-home` - Page d'accueil
-- `.ratio-1x1` - Images carrées
+### **Images et Media :**
+- `.img-panier` - Images du panier avec responsive
+- `.produit-image` - Images des produits avec zoom
 
-### **Navigation :**
+### **Layout et Navigation :**
+- `.header-container` - Header avec CSS Grid
 - `.site-nav` - Navigation principale
 - `.categories-container` - Menu des catégories
 - `.dropdown` - Menus déroulants
@@ -79,20 +88,29 @@
 
 ### **Ajouter un style :**
 1. Identifier le bon fichier selon la fonction
-2. Ajouter dans la section appropriée
-3. Commenter le code
-4. Tester le responsive
+2. Ajouter dans la section appropriée avec commentaires
+3. Tester le responsive sur tous les breakpoints
+4. Vérifier la compatibilité avec les styles existants
 
 ### **Modifier un style :**
 1. Localiser la classe dans le bon fichier
-2. Modifier en gardant la structure
-3. Vérifier la compatibilité mobile
-4. Tester les changements
+2. Modifier en gardant la structure et les commentaires
+3. Vérifier la compatibilité mobile et responsive
+4. Tester les changements et animations
+
+### **Nouveau système de produits :**
+- **Grille CSS Grid** : colonnes adaptatives automatiques
+- **Effets hover** : élévation, zoom, overlay slide
+- **Responsive** : adaptation automatique selon la taille d'écran
+- **Performance** : transitions fluides et optimisées
 
 ## 📋 Bonnes Pratiques
 
-- ✅ **Commentaires détaillés** pour chaque section
-- ✅ **Structure logique** et organisée
-- ✅ **Responsive first** design
+- ✅ **Commentaires détaillés** pour chaque règle CSS
+- ✅ **Structure hiérarchique** avec séparateurs visuels
+- ✅ **Responsive first** design avec mobile-first approach
 - ✅ **Performance optimisée** avec des règles ciblées
 - ✅ **Maintenance facilitée** avec une organisation claire
+- ✅ **Nouveau design moderne** pour les produits
+- ✅ **CSS Grid** pour une mise en page flexible
+- ✅ **Animations fluides** avec transitions optimisées

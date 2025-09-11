@@ -163,17 +163,23 @@ class PanierController extends AbstractController
     #[Route('/panier/commander', name: 'finaliser_commande', methods: ['GET', 'POST'])]
     public function finaliserCommande(Request $request, SessionInterface $session, EntityManagerInterface $em): Response
     {
-        // 1. Vérifier que le panier n'est pas vide
+        // 1. Vérifier que l'utilisateur est connecté
+        if (!$this->getUser()) {
+            $this->addFlash('warning', 'Vous devez être connecté pour finaliser votre commande. Veuillez vous connecter.');
+            return $this->redirectToRoute('app_login');
+        }
+
+        // 2. Vérifier que le panier n'est pas vide
         $panier = $session->get('panier', []);
         if (empty($panier)) {
             $this->addFlash('warning', 'Votre panier est vide !');
             return $this->redirectToRoute('Panier');
         }
- 
-        // 2. Calculer le total et préparer les détails
+
+        // 3. Calculer le total et préparer les détails
         $totalGeneral = 0;
         $produitsDuPanier = [];
- 
+
         foreach ($panier as $produitId => $quantite) {
             $produit = $em->getRepository(Produit::class)->find($produitId);
             if ($produit) {
@@ -186,88 +192,61 @@ class PanierController extends AbstractController
                 $totalGeneral += $sousTotal;
             }
         }
- 
-        // 3. Créer une nouvelle commande
+
+        // 4. Créer une nouvelle commande
         $commande = new Commande();
         $commande->setDate(new \DateTime());
         $commande->setTotal($totalGeneral);
         $commande->setCommande('CMD-' . uniqid());
- 
-        // 4. Si l'utilisateur est connecté, l'associer à la commande
+
+        // 5. Associer l'utilisateur connecté à la commande
         $user = $this->getUser();
-        if ($user) {
-            $commande->setUser($user);
- 
-            // Pré-remplir les informations si disponibles
-            try {
-                // Nom complet
-                $nomComplet = $user->getNom();
-                if (!$nomComplet && method_exists($user, 'getFirstName') && method_exists($user, 'getLastName')) {
-                    $nomComplet = trim($user->getFirstName() . ' ' . $user->getLastName());
-                }
-                if ($nomComplet) {
-                    $commande->setNom($nomComplet);
-                }
- 
-                // Autres informations
-                if (method_exists($user, 'getAdressePostale')) {
-                    $commande->setAdressePostale($user->getAdressePostale());
-                }
-                if (method_exists($user, 'getTelephone')) {
-                    $commande->setTelephone($user->getTelephone());
-                }
-                if (method_exists($user, 'getAdresseLivraison')) {
-                    $commande->setAdresseLivraison($user->getAdresseLivraison());
-                }
-            } catch (\Exception $e) {
-                // En cas d'erreur, continuer sans pré-remplir
-            }
-        }
- 
-        // 5. Créer le formulaire de commande
+        $commande->setUser($user);
+
+        // 6. Créer le formulaire de commande
         $form = $this->createForm(CommandeType::class, $commande);
         $form->handleRequest($request);
- 
-        // 6. Si le formulaire est soumis et valide
+
+        // 7. Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             // Si l'adresse de livraison est vide, utiliser l'adresse de facturation
             if (empty($commande->getAdresseLivraison())) {
                 $commande->setAdresseLivraison($commande->getAdressePostale());
             }
- 
-            // 7. Créer les lignes de commande pour chaque produit
+
+            // 8. Créer les lignes de commande pour chaque produit
             foreach ($panier as $produitId => $quantite) {
                 $produit = $em->getRepository(Produit::class)->find($produitId);
                 if (!$produit) {
                     continue;
                 }
- 
+
                 // Créer une nouvelle ligne de commande
                 $ligneCommande = new CommandeProduit();
                 $ligneCommande->setCommande($commande);
                 $ligneCommande->setProduit($produit);
                 $ligneCommande->setQuantite($quantite);
                 $ligneCommande->setSousTotal($produit->getPrix() * $quantite);
- 
+
                 // Ajouter la ligne à la commande
                 $commande->addCommandeProduit($ligneCommande);
                 $em->persist($ligneCommande);
             }
- 
-            // 8. Sauvegarder la commande dans la base de données
+
+            // 9. Sauvegarder la commande dans la base de données
             $em->persist($commande);
             $em->flush();
- 
-            // 9. Vider le panier
+
+            // 10. Vider le panier
             $session->remove('panier');
- 
-            // 10. Rediriger vers la page de confirmation
+
+            // 11. Rediriger vers la page de confirmation
             return $this->redirectToRoute('commande_confirmation', [
                 'id' => $commande->getId()
             ]);
         }
- 
-        // 11. Afficher le formulaire de commande
+
+        // 12. Afficher le formulaire de commande
         return $this->render('panier/commande.html.twig', [
             'form' => $form->createView(),
             'panier' => $produitsDuPanier,

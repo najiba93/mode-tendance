@@ -1,55 +1,10 @@
 <header>
 <div class="header-container">
 
-  {#  Logo et titre du site #}
-  {#  Logo principal du site avec un fallback si l’image ne charge pas #}
-  <div class="logo-div">
-    <img src="/img/logo.png" alt="Logo Mode & Tendance" class="logo-header">
- 
-  </div>
-
-  {#  Menu de navigation principal #}
-  <nav class="site-nav" id="siteNav">
-    <ul>
-    
-      <li><a href="{{ path('Accueil') }}">Accueil</a></li>
-
-      {#  Lien vers la liste des produits #}
-      <li><a href="{{ path('Produits') }}">Produits</a></li>
-
-     
-
-      {#  Affichage du lien "Ajouter Produit" uniquement pour les admins #}
-      {% if is_granted("ROLE_ADMIN") %}
-        <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
-      {% endif %}
-    </ul>
-      <div class="categories-container">
-   
-    <div class="categories-buttons">
-      {% for categorie in categories %}
-        <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn text-secondary btn-sm">
-          {{ categorie.nom }}
-        </a>
-      {% endfor %}
-    </div>
-  </div>
-  </nav>
 
 
 
-
-
-  {#  Actions à droite (bouton menu mobile + icônes) #}
-  <div class="header-actions">
-    <button class="nav-toggle" aria-controls="siteNav" aria-expanded="false" aria-label="Menu">
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-      <span class="nav-toggle-bar"></span>
-    </button>
-
-  {#  Icônes en haut à droite du header (profil, panier, contact) #}
-  <div class="icon-header dropdown">
+<div class="icon-header dropdown">
 
     {#  Icône Profil avec menu déroulant conditionnel #}
     <a
@@ -99,6 +54,72 @@
       <i class="fi fi-bs-envelope ms-3"></i>
     </a>
   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {#  Logo et titre du site #}
+  {#  Logo principal du site avec un fallback si l’image ne charge pas #}
+  <div class="logo-div">
+    <img src="/img/logo.png" alt="Logo Mode & Tendance" class="logo-header">
+ 
+  </div>
+
+  {#  Menu de navigation principal #}
+  <nav class="site-nav" id="siteNav">
+    <ul>
+    
+      <li><a href="{{ path('Accueil') }}">Accueil</a></li>
+
+      {#  Lien vers la liste des produits #}
+      <li><a href="{{ path('Produits') }}">Produits</a></li>
+
+     
+
+      {#  Affichage du lien "Ajouter Produit" uniquement pour les admins #}
+      {% if is_granted("ROLE_ADMIN") %}
+        <li><a href="{{ path('admin_produit_new') }}">Ajouter Produit</a></li>
+      {% endif %}
+    </ul>
+      <div class="categories-container">
+   
+    <div class="categories-buttons">
+      {% for categorie in categories %}
+        <a href="{{ path('categorie_produits', {id: categorie.id}) }}" class="btn text-secondary btn-sm">
+          {{ categorie.nom }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+  </nav>
+
+
+
+
+
+  {#  Actions à droite (bouton menu mobile + icônes) #}
+  <div class="header-actions">
+    <button class="nav-toggle" aria-controls="siteNav" aria-expanded="false" aria-label="Menu">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      
+    </button>
+
+
   </div>
 
 </div>

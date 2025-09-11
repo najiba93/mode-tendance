@@ -10,7 +10,7 @@ header {
 
 /* Conteneur du header avec largeur maximale et centrage */
 .header-container {
-  max-width: 80%; /* Largeur maximale pour éviter que le contenu soit trop étiré */
+  max-width: 100%; /* Largeur maximale pour éviter que le contenu soit trop étiré */
   margin: 0 auto; /* Centrage horizontal automatique */
   position: relative; /* Position relative pour les éléments enfants absolus */
   display: grid; /* Utilise CSS Grid pour la mise en page */
@@ -187,9 +187,11 @@ nav.site-nav {
 
 /* Conteneur des icônes avec alignement */
 .icon-header {
-  display: flex; /* Utilise Flexbox */
-  align-items: center; /* Centre verticalement */
-  gap: 15px; /* Espace entre les icônes */
+   grid-column: 3; /* Place dans la 3e colonne du grid */
+  justify-self: end; /* Aligne à droite dans la colonne */
+  display: flex;
+  align-items: center; /* Corrige "left" en "center" */
+  gap: 15px;
 }
 
 /* Style commun à toutes les icônes Flaticon */
